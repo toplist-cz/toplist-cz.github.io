@@ -1,0 +1,3 @@
+[submodule "report/assets/bootstrap4"]
+	path = report/assets/bootstrap4
+	url = https://github.com/twbs/bootstrap.git
