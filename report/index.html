@@ -5,20 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="Pavel Francírek @ TOPlist s.r.o.">
-    <title>TOPlist - {{_('měsíční report')|capFirst}}</title>
+    <title>TOPlist - měsíční report</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/4.4/examples/sticky-footer-navbar/">
 
     <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="/css/report.css?{{g.version}}">
-    <link href="/assets/css/font-awesome.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="/assets/datatables/datatables.min.css">
-    <link rel="stylesheet" href="/assets/css/chartjs/Chart.min.css">
+    <link rel="stylesheet" href="css/report.css">
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/datatables/datatables.min.css">
+    <link rel="stylesheet" href="css/chartjs/Chart.min.css">
 
     <!-- Favicons -->
 <link rel="apple-touch-icon" href="/assets/favicons/apple-touch-icon.png" sizes="180x180">
-<link rel="icon" href="/assets/favicons/favicon-32x32.png" sizes="32x32" type="image/png">
-<link rel="icon" href="/assets/favicons/favicon-16x16.png" sizes="16x16" type="image/png">
+<link rel="icon" href="assets/favicons/favicon-32x32.png" sizes="32x32" type="image/png">
+<link rel="icon" href="assets/favicons/favicon-16x16.png" sizes="16x16" type="image/png">
 <link rel="manifest" href="/docs/4.4/assets/img/favicons/manifest.json">
 <link rel="mask-icon" href="/docs/4.4/assets/img/favicons/safari-pinned-tab.svg" color="#563d7c">
 <link rel="icon" href="/favicon.ico">
@@ -101,25 +101,25 @@
     <header>
   <!-- Fixed navbar -->
   <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-    <a class="navbar-brand" href="#"><img src="/img/toplist.png" alt="TOPlist Profi" width="28" height="28"> TOPlist Profi</a>
-    <span class="loading d-none"><i class="fa fa-spin fa-spinner danger"></i> {{_('stahuji')|capFirst}} ...</span>
+    <a class="navbar-brand" href="#"><img src="img/toplist.png" alt="TOPlist Profi" width="28" height="28"> TOPlist Profi</a>
+    <span class="loading d-none"><i class="fa fa-spin fa-spinner danger"></i> stahuji ...</span>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarCollapse">
       <ul class="navbar-nav ml-auto">
-        <li class="nav-item dropdown"><a href="#" id="reportsSwitch" class="nav-link dropdown-toggle" title="{{_('reporty')|capFirst}}" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class=" fa fa-list fa-inverse"></i> {{_('reporty')|capFirst}}</a>
+        <li class="nav-item dropdown"><a href="#" id="reportsSwitch" class="nav-link dropdown-toggle" title="reporty" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class=" fa fa-list fa-inverse"></i> reporty</a>
             <div id="reportList" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             </div>
         </li>
         <li class="nav-item bg-success">
             <span id="navSettingBadge" class="d-none badge badge-pill badge-secondary">1</span>
-            <a class="settings-switch nav-link" href="#"><i class=" fa fa-cog fa-inverse"></i> {{_('nastavení')|capFirst}}</a>
+            <a class="settings-switch nav-link" href="#"><i class=" fa fa-cog fa-inverse"></i> nastavení</a>
         </li>
       </ul>
       <form class="form-inline mt-2 mt-md-0">
-        <a href="/auth" class="btn btn-warning my-2 my-sm-0 ml-2" type="submit" id="btnLogin">{{_('přihlásit')|capFirst}}</a>
-        <button class="d-none btn btn-warning my-2 my-sm-0 ml-2" type="submit" id="btnLogout">{{_('odhlásit')|capFirst}}</button>
+        <a href="https://profi.toplist.cz/auth/cf5ac64a-ec50-11ea-9d60-a3da01a0b5f8" class="btn btn-warning my-2 my-sm-0 ml-2" type="submit" id="btnLogin">přihlásit</a>
+        <button class="d-none btn btn-warning my-2 my-sm-0 ml-2" type="submit" id="btnLogout">odhlásit</button>
       </form>
     </div>
   </nav>
@@ -129,28 +129,28 @@
 <main role="main" class="flex-shrink-0">
     <div class="container sticky-top">
         <h1 class="mt-5 text-center"><div class="d-none d-sm-block"><button
-            data-report-id="" type="button" class="prev-report d-none float-left btnSwitchReport btn btn-secondary btn-warning" label="{{_('předchozí')}}">&lt;&lt;</button><button
-            data-report-id="" type="button" class="next-report d-none float-right btnSwitchReport btn btn-secondary btn-warning" label="{{_('následující')}}">&gt;&gt;</button></div><span
-            class="badge badge-light" id="reportDate"></span> <div class='d-sm-none'><div class="btn-group" role="group" aria-label="{{_('listování reportů')}}"><button
-            data-report-id="" type="button" class="prev-report d-none btnSwitchReport btn btn-secondary btn-warning" label="{{_('předchozí')}}">&lt;&lt;</button><button
-            data-report-id="" type="button" class="next-report d-none btnSwitchReport btn btn-secondary btn-warning" label="{{_('následující')}}">&gt;&gt;</button></div></div>
+            data-report-id="" type="button" class="prev-report d-none float-left btnSwitchReport btn btn-secondary btn-warning" label="předchozí">&lt;&lt;</button><button
+            data-report-id="" type="button" class="next-report d-none float-right btnSwitchReport btn btn-secondary btn-warning" label="následující">&gt;&gt;</button></div><span
+            class="badge badge-light" id="reportDate"></span> <div class='d-sm-none'><div class="btn-group" role="group" aria-label="listování reportů"><button
+            data-report-id="" type="button" class="prev-report d-none btnSwitchReport btn btn-secondary btn-warning" label="předchozí">&lt;&lt;</button><button
+            data-report-id="" type="button" class="next-report d-none btnSwitchReport btn btn-secondary btn-warning" label="následující">&gt;&gt;</button></div></div>
         </h1>
         <div id="settingsDiv" class="settings d-none">
-            <i class="settings-switch btn fa fa-times float-right fa-2x text-black" title="{{_('zavřít')}}"></i>
+            <i class="settings-switch btn fa fa-times float-right fa-2x text-black" title="zavřít"></i>
             <div id="settingsHidden" class="jumbotron">
-                <h3>{{_('nastavení')|capFirst}}</h3>
-                {{_('zobrazené statistiky')|capFirst}}:<br>
+                <h3>nastavení</h3>
+                zobrazené statistiky:<br>
             </div>
         </div>
     </div>
     <div id="login-info" class="container d-none">
         <div class="card mx-auto border-primary mb-3" style="max-width: 18rem;">
             <div class="card-body text-primary">
-                <h5 class="card-title">{{_('přihlášení')|capFirst}}</h5>
+                <h5 class="card-title">přihlášení</h5>
                 <hr>
-                <p class="card-text">{{_('Pro zobrazení Vašich reportů je potřeba se přihlásit.')}}</p>
+                <p class="card-text">Pro zobrazení Vašich reportů je potřeba se přihlásit.</p>
                 <div class="text-right">
-                    <a href="/auth" class="btn btn-primary my-2 my-sm-0" type="submit">{{_('přihlásit')|capFirst}}</a>
+                    <a href="https://profi.toplist.cz/auth/cf5ac64a-ec50-11ea-9d60-a3da01a0b5f8" class="btn btn-primary my-2 my-sm-0" type="submit">přihlásit</a>
                 </div>
             </div>
         </div>
@@ -158,13 +158,13 @@
     <div id="create-report" class="container d-none">
         <div class="card mx-auto border-primary mb-3">
             <div class="card-body text-primary">
-                <h5 class="card-title">{{_('nový report')|capFirst}}</h5>
+                <h5 class="card-title">nový report</h5>
                 <hr>
-                <p class="card-text">{{_('Report za měsíc {0} ještě není vytvořen.').format(''|datetime('LLLL'))}}<br>
-                    {{_('Čas, kdy jej bude možné vytvořit, je ještě: ')}}<span id="report-countdown"></span>
+                <p class="card-text">Report za měsíc {0} ještě není vytvořen.').format(''|datetime('LLLL'))}}<br>
+                    Čas, kdy jej bude možné vytvořit, je ještě: <span id="report-countdown"></span>
                 </p>
                 <div class="text-right">
-                    <a href="#" id="createReport" class="btn btn-primary my-2 my-sm-0" type="submit">{{_('vytvořit')|capFirst}}</a>
+                    <a href="#" id="createReport" class="btn btn-primary my-2 my-sm-0" type="submit">vytvořit</a>
                 </div>
             </div>
         </div>
@@ -178,39 +178,45 @@
 
 <footer class="footer mt-auto py-3">
   <div class="container">
-    <span class="text-muted">&copy; TOPlist s.r.o. [<a href="https://o.toplist.cz/kontakt">{{_('kontakt')}}</a>]</span>
+    <span class="text-muted">&copy; TOPlist s.r.o. [<a href="https://o.toplist.cz/kontakt">kontakt</a>]</span>
   </div>
 </footer>
-<script src="/assets/bootstrap4/jquery-3.4.1.min.js"></script>
-<script src="/assets/bootstrap4/popper.min.js"></script>
-<script src="/assets/bootstrap4/bootstrap.min.js"></script>
-<script type="text/javascript" src="/js/moment-with-locales.min.js"></script>
-<script type="text/javascript" src="/assets/js/chartjs/Chart.min.js"></script>
-<script type="text/javascript" src="/assets/js/chartjs/chartjs-plugin-colorschemes.min.js"></script>
+<script src="js/jquery-3.4.1.min.js"></script>
+<script src="js/popper.min.js"></script>
+<script src="assets/bootstrap4/dist/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/moment-with-locales.min.js"></script>
+<script type="text/javascript" src="js/chartjs/Chart.min.js"></script>
+<script type="text/javascript" src="js/chartjs/chartjs-plugin-colorschemes.min.js"></script>
 <script type="text/javascript" src="/assets/js/raven/raven.min.js"></script>
-<script type="text/javascript" src="/assets/datatables/datatables.min.js"></script>
+<script type="text/javascript" src="assets/datatables/datatables.min.js"></script>
 <script type="text/javascript">
 //{% if not g.debug %}
-    Raven.config('https://89bfb81b434342ae83c55de4f4877471@sentry.toplist.cz/6', {
-        whitelistUrls: [/toplist\.{{config.LANG}}/, /profi\.toplist\.{{config.LANG}}/]
-    }).install();
+//    Raven.config('https://89bfb81b434342ae83c55de4f4877471@sentry.toplist.cz/6', {
+//        whitelistUrls: [/toplist\.{{config.LANG}}/, /profi\.toplist\.{{config.LANG}}/]
+//    }).install();
 //{% endif %}
 </script>
-<script type="text/javascript" src="/js/report.js?{{g.version}}"></script>
+<script type="text/javascript" src="js/report.js"></script>
 <script type="text/javascript">
 jQuery(function($){
-    moment.locale('{{_("cs-CZ")}}');
+    moment.locale("cs-CZ");
 });
 var DICT = {
-    "hodnota": "{{_('hodnota')}}",
-    "množství": "{{_('množství')}}",
-    "zavřít": "{{_('zavřít')}}"
+    "hodnota": "hodnota",
+    "množství": "množství",
+    "zavřít": "zavřít"
 };
-{% if jwt %}sessionStorage.setItem('jwt', '{{jwt}}');{% endif %}
-var STATS = {
-    {% for stat in stats -%}{{stat.id}}: {renders: ['{{stat.renderer}}']}{{',' if not loop.last}}
-    {%- endfor %}
-};
-var API_URL = "{{'https://profi.toplist.cz' if not g.dev else 'http://10.0.30.217:8000'}}";
+function getUrlVars() {
+    var vars = {};
+    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+        vars[key] = value;
+    });
+    return vars;
+}
+let jwt = getUrlVars()['jwt'];
+if (jwt) {
+    sessionStorage.setItem('jwt', jwt);
+}
+var API_URL = "https://profi.toplist.cz";
 </script>
 </html>
