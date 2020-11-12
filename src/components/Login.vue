@@ -2,10 +2,10 @@
 	<div class="box box-login" v-if="!display">
 		<h2 class="mb-3">Přihlášení</h2>
 		<p class="mb-3">Pro zobrazení Vašich reportů je potřeba se přihlásit.</p>
-		<button class="c-button button-yellow">
+		<a class="c-button button-yellow" href="https://profi.toplist.cz/auth/cf5ac64a-ec50-11ea-9d60-a3da01a0b5f8">
 			<i class="icofont-login" />
 			Přihlásit se
-		</button>
+		</a>
 	</div>
 </template>
 

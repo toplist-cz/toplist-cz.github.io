@@ -39,6 +39,14 @@ export default {
 		DeviceType,
 		Domains,
 		SearchEngines
+	},
+
+	mounted () {
+		console.log(this.$store.getters.getToken)
+	},
+
+	methods: {
+
 	}
 }
 </script>
