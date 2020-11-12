@@ -1,28 +1,39 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+	<div>
+		<NavBar />
+		<div class="container">
+			<Alert header="Nastavení" message="zobrazené statistiky:" type="success" />
+			<Login :display="isLoggedIn" />
+			<NewReport :display="isLoggedIn" />
+			<Reports />
+		</div>
+	</div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import NavBar from "@/components/NavBar.vue"
+import Login from "@/components/Login.vue"
+import NewReport from "@/components/NewReport.vue"
+import Alert from "@/components/Alert.vue"
+import Reports from "@/components/Reports.vue"
 
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
+	name: "App",
+	components: {
+		NavBar,
+		Login,
+		NewReport,
+		Alert,
+		Reports
+	},
+	data () {
+		return {
+			isLoggedIn: false
+		}
+	}
 }
 </script>
 
 <style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+@import "@/assets/style.scss";
 </style>
