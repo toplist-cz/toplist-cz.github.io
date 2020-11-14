@@ -3,8 +3,8 @@
 		<NavBar />
 		<div class="container">
 			<Alert header="Nastavení" message="zobrazené statistiky:" type="success" />
-			<Login :display="isLoggedIn" />
-			<NewReport :display="isLoggedIn" />
+			<Login />
+			<NewReport />
 			<Reports />
 		</div>
 	</div>
@@ -19,6 +19,7 @@ import Reports from "@/components/Reports.vue"
 import axios from "axios"
 import { getCookie, getJwtFromUrl, parseJwt } from "@/utils/authHelpers"
 import { API_HOST } from "./consts.js"
+import moment from "moment"
 
 export default {
 	name: "App",
@@ -28,11 +29,6 @@ export default {
 		NewReport,
 		Alert,
 		Reports
-	},
-	data () {
-		return {
-			isLoggedIn: false
-		}
 	},
 
 	async created () {
@@ -49,7 +45,7 @@ export default {
 			if (!getCookie("authToken")) {
 				await this.getAuth(jwt, toplistId)
 			} else {
-				this.isLoggedIn = true
+				this.$store.commit("setIsLoggedIn", true)
 				await this.getAvailableReports(toplistId)
 			}
 		}
@@ -69,11 +65,18 @@ export default {
 					token: jwt
 				})
 			}).then((response) => {
-				document.cookie = `authToken=${response.data.token};samesite=strict;max-age=24000`
+				document.cookie = `authToken=${response.data.token};samesite=strict;max-age=3600`
 				this.getAvailableReports(topListId)
-				this.isLoggedIn = true
+				this.$store.commit("setIsLoggedIn", true)
 			}).catch(error => {
 				console.error(error)
+				this.$buefy.notification.open({
+					duration: 5000,
+					message: error.response.data.description,
+					position: "is-bottom-right",
+					type: "is-danger",
+					hasIcon: true
+				})
 			})
 		},
 		async getAvailableReports (id) {
@@ -85,11 +88,30 @@ export default {
 				}
 			}).then((response) => {
 				this.$store.commit("setAvailableReports", response.data)
+				console.log(response.data)
+				if (response.data.length === 0 || response.data[0].dateFrom !== moment().subtract(1, "months").startOf("month").format("YYYY-MM-DD")) {
+					this.$store.commit("setDisplayNewReport", true)
+					this.$store.commit("setNewReportData", {
+						id: response.data[0].id,
+						days: this.reportCountdown()
+					})
+				}
 			}).catch(error => {
-				console.error(error)
+				document.cookie = "authToken=;samesite=strict;max-age=0"
+				this.$buefy.notification.open({
+					duration: 5000,
+					message: error.response.data.description,
+					position: "is-bottom-right",
+					type: "is-danger",
+					hasIcon: true
+				})
 			})
+		},
+		reportCountdown () {
+			const now = new Date().getTime()
+			const distance = moment().endOf("month").toDate() - now
+			return Math.floor(distance / (1000 * 60 * 60 * 24))
 		}
-
 	}
 }
 </script>

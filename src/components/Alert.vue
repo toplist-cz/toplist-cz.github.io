@@ -1,5 +1,5 @@
 <template>
-	<div :class="alertType">
+	<div v-if="isSettingsBoxVisible" :class="alertType">
 		<i @click="close" class="icofont-close" />
 		<h2 v-if="header" class="mb-3">{{ header }}</h2>
 		{{ message }}
@@ -7,6 +7,8 @@
 </template>
 
 <script>
+import { mapState } from "vuex"
+
 export default {
 	name: "Alert",
 
@@ -15,12 +17,13 @@ export default {
 	computed: {
 		alertType () {
 			return `alert alert-${this.type}`
-		}
+		},
+		...mapState(["isSettingsBoxVisible"])
 	},
 
 	methods: {
 		close () {
-			this.visible = false
+			this.$store.commit("setSettingsBoxVisible", true)
 		}
 	}
 }

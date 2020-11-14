@@ -6,8 +6,8 @@ import { mapState } from 'vuex';
 			TOPlist Profi
 		</div>
 		<div class="menu">
-			<b-dropdown aria-role="list">
-				<button class="button is-primary" type="button" slot="trigger">
+			<b-dropdown v-if="isLoggedIn" aria-role="list">
+				<button class="button is-info" type="button" slot="trigger">
 					<template>
 						<b-icon icon="list" />
 						<span>Reporty</span>
@@ -20,22 +20,11 @@ import { mapState } from 'vuex';
 					aria-role="listitem"
 					@click="getReport(report)"
 				>
-					{{ report.dateFrom }}
+					{{ report.dateFrom | moment('MMMM YYYY') }}
 				</b-dropdown-item>
 			</b-dropdown>
-			<button class="c-button button-blue">
-				<i class="icofont-listing-box" />
-				Reporty
-			</button>
-
-			<button class="c-button button-green">
-				<i class="icofont-settings-alt" />
-				Nastavení
-			</button>
-			<button class="c-button button-yellow">
-				<i class="icofont-login" />
-				Přihlásit
-			</button>
+			<b-button @click="$store.commit('setSettingsBoxVisible', true)" icon-left="cog" v-if="isLoggedIn" type="is-success">Nastavení</b-button>
+			<b-button icon-left="sign-in-alt"  v-if="!isLoggedIn" type="is-warning">Přihlásit se</b-button>
 		</div>
 	</nav>
 </template>
@@ -54,7 +43,7 @@ export default {
 	},
 
 	computed: {
-		...mapState(["availableReports", "toplistId"])
+		...mapState(["availableReports", "toplistId", "isLoggedIn"])
 	},
 
 	methods: {

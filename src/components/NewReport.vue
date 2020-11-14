@@ -1,10 +1,10 @@
 <template>
-	<div class="box box-login" v-if="!display">
+	<div class="box box-login" v-if="displayNewReport">
 		<h2 class="mb-3">Nový report</h2>
 		<p class="mb-3">
-			Report za měsíc {0} ještě není vytvořen.').format(''|datetime('LLLL'))}}
+			Report za předchozí mesíč ještě není vytvořen.
 			<br>
-			Čas, kdy jej bude možné vytvořit, je ještě: 20d 2h 7m 12s
+			Čas, kdy jej bude možné vytvořit, je ještě {{ newReportData.days }} dní.
 		</p>
 		<button class="c-button button-blue">
 			<i class="icofont-plus" />
@@ -14,10 +14,15 @@
 </template>
 
 <script>
+// import moment from "moment"
+import { mapState } from "vuex"
+
 export default {
 	name: "NewReport",
 
-	props: ["display"]
+	computed: {
+		...mapState(["displayNewReport", "newReportData"])
+	}
 }
 </script>
 

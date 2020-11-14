@@ -1,5 +1,5 @@
 <template>
-	<div class="box box-login" v-if="!display">
+	<div class="box box-login" v-if="!isLoggedIn">
 		<h2 class="mb-3">Přihlášení</h2>
 		<p class="mb-3">Pro zobrazení Vašich reportů je potřeba se přihlásit.</p>
 		<a class="c-button button-yellow" href="https://profi.toplist.cz/auth/cf5ac64a-ec50-11ea-9d60-a3da01a0b5f8">
@@ -10,10 +10,13 @@
 </template>
 
 <script>
+import { mapState } from "vuex"
 export default {
 	name: "Login",
 
-	props: ["display"]
+	computed: {
+		...mapState(["isLoggedIn"])
+	}
 }
 </script>
 
