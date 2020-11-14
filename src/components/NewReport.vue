@@ -1,15 +1,12 @@
 <template>
-	<div class="box box-login" v-if="displayNewReport">
+	<div class="box box-login box-new-report" v-if="displayNewReport">
 		<h2 class="mb-3">Nový report</h2>
-		<p class="mb-3">
-			Report za předchozí mesíč ještě není vytvořen.
+		<p class="mb-3 has-text-centered">
+			Report za mesíč <strong>{{ nameOfLastMonth }}</strong> ještě není vytvořen.
 			<br>
-			Čas, kdy jej bude možné vytvořit, je ještě {{ newReportData.days }} dní.
+			Čas, kdy jej bude možné vytvořit, je ještě <strong>{{ newReportData.days }} dní</strong>.
 		</p>
-		<button @click="crateReport" class="c-button button-blue">
-			<i class="icofont-plus" />
-			Vytvořit report
-		</button>
+		<b-button @click="crateReport" icon-left="plus" type="is-info">Vytvořit report</b-button>
 	</div>
 </template>
 
@@ -19,12 +16,16 @@ import { mapState } from "vuex"
 import { getCookie } from "@/utils/authHelpers"
 import { API_HOST } from "@/consts.js"
 import axios from "axios"
+import moment from "moment"
 
 export default {
 	name: "NewReport",
 
 	computed: {
-		...mapState(["displayNewReport", "newReportData", "toplistId"])
+		...mapState(["displayNewReport", "newReportData", "toplistId"]),
+		nameOfLastMonth () {
+			return moment().subtract(1, "month").startOf("month").format("MMMM")
+		}
 	},
 
 	methods: {
@@ -71,6 +72,10 @@ export default {
 		color: #428bca;
 		font-weight: 300;
 		font-size: 20px;
+
+		strong {
+			color: #428bca;
+		}
 	}
 }
 </style>

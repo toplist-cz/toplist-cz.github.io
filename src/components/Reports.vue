@@ -1,58 +1,58 @@
 <template>
-	<div>
-		<p>{{ statisticsData }}</p>
-		<NumberOfVisits />
-		<DailyVisits />
-		<UniqueIPs />
-		<Views />
-		<OperationSystems />
-		<DisplayResolution />
-		<ColorDepth />
-		<DeviceType />
-		<Domains />
-		<SearchEngines />
+	<div v-if="statisticsData">
+		<h2 class="title">
+			{{ statisticsData.dateFrom | moment('MMMM YYYY') | capitalize }}
+		</h2>
+		<div
+			class="graph-panel"
+			v-for="statistic of statistics"
+			:key="statistic.statId"
+		>
+			{{ statistic.keyword }}
+		</div>
 	</div>
 </template>
 
-<script lang="ts">
-import NumberOfVisits from "./reports/NumberOfVisits.vue"
-import DailyVisits from "./reports/DailyVisits.vue"
-import UniqueIPs from "./reports/UniqueIPs.vue"
-import Views from "./reports/Views.vue"
-import OperationSystems from "./reports/OperationSystems.vue"
-import DisplayResolution from "./reports/DisplayResolution.vue"
-import ColorDepth from "./reports/ColorDepth.vue"
-import DeviceType from "./reports/DeviceType.vue"
-import Domains from "./reports/Domains.vue"
-import SearchEngines from "./reports/SearchEngines.vue"
+<script>
 import { mapState } from "vuex"
+import STATS from "@/utils/stats"
 
 export default {
 	name: "Reports",
 
 	components: {
-		NumberOfVisits,
-		DailyVisits,
-		UniqueIPs,
-		Views,
-		OperationSystems,
-		DisplayResolution,
-		ColorDepth,
-		DeviceType,
-		Domains,
-		SearchEngines
+
+	},
+
+	data () {
+		return {
+			statistics: []
+		}
 	},
 
 	computed: {
-		...mapState(["statisticsData"])
+		...mapState(["statisticsData", "availableReports"])
 	},
 
 	watch: {
 		statisticsData (newValue) {
-			// console.log(newValue)
-			if (newValue) {
-				// Download sth
-			}
+			this.parseData(this.statisticsData.stats)
+		}
+	},
+
+	methods: {
+		parseData (statistics) {
+			const statisticsData = []
+
+			statistics.forEach(statistic => {
+				statisticsData.push({
+					...statistic,
+					renderer: STATS[statistic.statId].renderer,
+					keyword: STATS[statistic.statId].keyword
+				})
+			})
+			this.statistics = statisticsData
+			console.log(statisticsData)
 		}
 	}
 }

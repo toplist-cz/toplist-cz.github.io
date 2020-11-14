@@ -23,7 +23,7 @@ export default {
 
 	methods: {
 		close () {
-			this.$store.commit("setSettingsBoxVisible", true)
+			this.$store.commit("setSettingsBoxVisible", false)
 		}
 	}
 }

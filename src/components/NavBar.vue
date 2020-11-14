@@ -20,7 +20,7 @@ import { mapState } from 'vuex';
 					aria-role="listitem"
 					@click="getReport(report)"
 				>
-					{{ report.dateFrom | moment('MMMM YYYY') }}
+					{{ report.dateFrom | moment('MMMM YYYY') | capitalize }}
 				</b-dropdown-item>
 			</b-dropdown>
 			<b-button @click="$store.commit('setSettingsBoxVisible', true)" icon-left="cog" v-if="isLoggedIn" type="is-success">Nastavení</b-button>
@@ -61,6 +61,12 @@ export default {
 				console.error(error)
 			})
 			loadingComponent.close()
+		}
+	},
+
+	watch: {
+		availableReports (reports) {
+			this.getReport(reports[0])
 		}
 	}
 }

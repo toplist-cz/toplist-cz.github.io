@@ -49,6 +49,7 @@ export default {
 				await this.getAvailableReports(toplistId)
 			}
 		}
+		// await this.getStats()
 		loadingComponent.close()
 	},
 
@@ -88,7 +89,6 @@ export default {
 				}
 			}).then((response) => {
 				this.$store.commit("setAvailableReports", response.data)
-				console.log(response.data)
 				if (response.data.length === 0 || response.data[0].dateFrom !== moment().subtract(1, "months").startOf("month").format("YYYY-MM-DD")) {
 					this.$store.commit("setDisplayNewReport", true)
 					this.$store.commit("setNewReportData", {
@@ -111,6 +111,28 @@ export default {
 			const now = new Date().getTime()
 			const distance = moment().endOf("month").toDate() - now
 			return Math.floor(distance / (1000 * 60 * 60 * 24))
+		},
+		async getStats () {
+			await axios({
+				method: "post",
+				crossDomain: true,
+				headers: {
+					"Content-Type": "application/json; charset=utf-8"
+				},
+				url: `${API_HOST}/sharedData/job`
+			}).then((response) => {
+				console.log(response.data)
+				// this.$store.commit("setStats", response.data)
+			}).catch(error => {
+				console.error(error)
+				this.$buefy.notification.open({
+					duration: 5000,
+					message: error.response.data.description,
+					position: "is-bottom-right",
+					type: "is-danger",
+					hasIcon: true
+				})
+			})
 		}
 	}
 }
