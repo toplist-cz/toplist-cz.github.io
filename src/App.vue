@@ -18,7 +18,7 @@ import Alert from "@/components/Alert.vue"
 import Reports from "@/components/Reports.vue"
 import axios from "axios"
 import { getCookie, getJwtFromUrl, parseJwt } from "@/utils/authHelpers"
-import { API_HOST } from "./consts.js"
+import { API_HOST } from "@/consts.js"
 import moment from "moment"
 
 export default {
