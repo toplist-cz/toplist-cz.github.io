@@ -1,5 +1,6 @@
 <template>
 	<div>
+		<p>{{ statisticsData }}</p>
 		<NumberOfVisits />
 		<DailyVisits />
 		<UniqueIPs />
@@ -24,6 +25,7 @@ import ColorDepth from "./reports/ColorDepth.vue"
 import DeviceType from "./reports/DeviceType.vue"
 import Domains from "./reports/Domains.vue"
 import SearchEngines from "./reports/SearchEngines.vue"
+import { mapState } from "vuex"
 
 export default {
 	name: "Reports",
@@ -41,12 +43,17 @@ export default {
 		SearchEngines
 	},
 
-	mounted () {
-		console.log(this.$store.getters.getToken)
+	computed: {
+		...mapState(["statisticsData"])
 	},
 
-	methods: {
-
+	watch: {
+		statisticsData (newValue) {
+			// console.log(newValue)
+			if (newValue) {
+				// Download sth
+			}
+		}
 	}
 }
 </script>

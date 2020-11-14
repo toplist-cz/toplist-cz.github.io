@@ -17,6 +17,8 @@ import NewReport from "@/components/NewReport.vue"
 import Alert from "@/components/Alert.vue"
 import Reports from "@/components/Reports.vue"
 import axios from "axios"
+import { getCookie, getJwtFromUrl, parseJwt } from "@/utils/authHelpers"
+import { API_HOST } from "./consts.js"
 
 export default {
 	name: "App",
@@ -34,60 +36,57 @@ export default {
 	},
 
 	async created () {
-		const jwt = await this.getJwtFromUrl()
+		const loadingComponent = this.$buefy.loading.open()
+		const jwt = await getJwtFromUrl()
 		if (jwt) {
-			localStorage.setItem("jwt", jwt)
-			this.getAuth(jwt)
 			let toplistId = null
-			for (const id in this.parseJwt(jwt).sco) {
+			for (const id in parseJwt(jwt).sco) {
 				toplistId = id
 			}
-			await this.getAvailableReports(toplistId)
+
+			this.$store.commit("setToplistId", toplistId)
+
+			if (!getCookie("authToken")) {
+				await this.getAuth(jwt, toplistId)
+			} else {
+				this.isLoggedIn = true
+				await this.getAvailableReports(toplistId)
+			}
 		}
+		loadingComponent.close()
 	},
 
 	methods: {
-		getJwtFromUrl () {
-			const vars = {}
-			window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (m, key, value) {
-				vars[key] = value
-			})
-			return vars.jwt
-		},
-		parseJwt (token) {
-			const base64Url = token.split(".")[1]
-			const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/")
-			const jsonPayload = decodeURIComponent(atob(base64).split("").map(function (c) {
-				return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2)
-			}).join(""))
-
-			return JSON.parse(jsonPayload)
-		},
-		async getAuth (jwt) {
+		async getAuth (jwt, topListId) {
 			await axios({
 				method: "post",
+				crossDomain: true,
 				headers: {
 					"Content-Type": "application/json; charset=utf-8"
 				},
-				url: "https://profi.toplist.cz/api/auth",
+				url: `${API_HOST}/auth`,
 				data: JSON.stringify({
 					token: jwt
 				})
 			}).then((response) => {
-				document.cookie = "authToken=" + response.data.token + ";samesite=strict;max-age=3600"
-			}).catch((error) => {
+				document.cookie = `authToken=${response.data.token};samesite=strict;max-age=24000`
+				this.getAvailableReports(topListId)
+				this.isLoggedIn = true
+			}).catch(error => {
 				console.error(error)
 			})
 		},
 		async getAvailableReports (id) {
 			await axios({
 				method: "get",
-				url: "https://profi.toplist.cz/api/v1/profi/" + id + "/reports/month?limit=12",
+				url: `${API_HOST}/v1/profi/${id}/reports/month?limit=12`,
 				headers: {
-					Authorization: this.$store.getters.getToken
+					Authorization: getCookie("authToken")
 				}
 			}).then((response) => {
-				console.log(response)
+				this.$store.commit("setAvailableReports", response.data)
+			}).catch(error => {
+				console.error(error)
 			})
 		}
 

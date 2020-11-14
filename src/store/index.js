@@ -5,20 +5,25 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
 	state: {
-		API_URL: "https://profi.toplist.cz"
+		API_URL: "https://profi.toplist.cz",
+		toplistId: null,
+		availableReports: null,
+		statisticsData: null
 	},
 	getters: {
-		getApiUrl: state => {
-			return state.API_URL
-		},
-		getToken: () => {
-			const matches = document.cookie.match(new RegExp(
-				"(?:^|; )" + "authToken".replace(/([.$?*|{}()[\]\\/+^])/g, "\\$1") + "=([^;]*)"
-			))
-			return matches ? decodeURIComponent(matches[1]) : undefined
-		}
+		toplistId: (state) => state.toplistId,
+		setAvailableReports: (state) => state.availableReports
 	},
 	mutations: {
+		setToplistId: (state, toplistId) => {
+			state.toplistId = toplistId
+		},
+		setAvailableReports: (state, reports) => {
+			state.availableReports = reports
+		},
+		setStatisticsData: (state, statisticsData) => {
+			state.statisticsData = statisticsData
+		}
 	},
 	actions: {
 	},
