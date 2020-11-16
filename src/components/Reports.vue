@@ -3,25 +3,28 @@
 		<h2 class="title">
 			{{ statisticsData.dateFrom | moment('MMMM YYYY') | capitalize }}
 		</h2>
-		<div
-			class="graph-panel"
+		<GraphBox
 			v-for="statistic of statistics"
 			:key="statistic.statId"
-		>
-			{{ statistic.keyword }}
-		</div>
+			:name="statistic.title"
+			:type="statistic.renderer"
+			:has-both-charts="statistic.bothCharts"
+			:result="statistic.result"
+			:default-chart="statistic.defaultChart"
+		/>
 	</div>
 </template>
 
 <script>
 import { mapState } from "vuex"
 import STATS from "@/utils/stats"
+import GraphBox from "@/components/GraphBox"
 
 export default {
 	name: "Reports",
 
 	components: {
-
+		GraphBox
 	},
 
 	data () {
@@ -45,10 +48,14 @@ export default {
 			const statisticsData = []
 
 			statistics.forEach(statistic => {
+				const hasBothCharts = [4]
+				const pieChartIsDefault = [4]
 				statisticsData.push({
 					...statistic,
 					renderer: STATS[statistic.statId].renderer,
-					keyword: STATS[statistic.statId].keyword
+					keyword: STATS[statistic.statId].keyword,
+					bothCharts: hasBothCharts.includes(statistic.statId),
+					defaultChart: pieChartIsDefault.includes(statistic.statId) ? "pie" : "line"
 				})
 			})
 			this.statistics = statisticsData

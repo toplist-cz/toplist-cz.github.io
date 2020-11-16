@@ -71,6 +71,7 @@ export default {
 				this.$store.commit("setIsLoggedIn", true)
 			}).catch(error => {
 				console.error(error)
+				this.$store.commit("setIsLoggedIn", false)
 				this.$buefy.notification.open({
 					duration: 5000,
 					message: error.response.data.description,
