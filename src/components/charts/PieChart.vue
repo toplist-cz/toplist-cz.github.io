@@ -7,24 +7,16 @@ export default {
 
 	extends: Doughnut,
 
+	props: {
+		data: Object
+	},
+
 	data () {
 		return {
-			data: {
-				datasets: [{
-					data: [300, 400, 60, 330, 50, 20]
-				}],
-
-				labels: [
-					"Mac Os",
-					"Windows",
-					"Windows phone",
-					"Android",
-					"Linux",
-					"Ubuntu"
-				]
-			},
-
 			options: {
+				legend: {
+					display: true
+				},
 				maintainAspectRatio: false,
 				responsive: true,
 				title: {

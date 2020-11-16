@@ -6,6 +6,7 @@
 		<GraphBox
 			v-for="statistic of statistics"
 			:key="statistic.statId"
+			:statId="statistic.statId"
 			:name="statistic.title"
 			:type="statistic.renderer"
 			:has-both-charts="statistic.bothCharts"
@@ -48,8 +49,8 @@ export default {
 			const statisticsData = []
 
 			statistics.forEach(statistic => {
-				const hasBothCharts = [4]
-				const pieChartIsDefault = [4]
+				const hasBothCharts = [4, 6, 7, 25]
+				const pieChartIsDefault = [4, 6, 7]
 				statisticsData.push({
 					...statistic,
 					renderer: STATS[statistic.statId].renderer,

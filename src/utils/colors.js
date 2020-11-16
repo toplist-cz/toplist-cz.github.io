@@ -1,5 +1,5 @@
 export default [
-	"#63b598",
+	"#40a1ec",
 	"#ce7d78",
 	"#ea9e70",
 	"#a48a9e",
