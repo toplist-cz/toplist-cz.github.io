@@ -2,10 +2,11 @@
 	<div>
 		<NavBar />
 		<div class="container">
-			<Alert header="Nastavení" message="zobrazené statistiky:" type="success" />
+			<Settings :header="$t('settings')" :message="$t('displayedStatistics')" type="success" />
 			<Login />
 			<NewReport />
 			<Reports />
+			<Footer />
 		</div>
 	</div>
 </template>
@@ -14,8 +15,9 @@
 import NavBar from "@/components/NavBar.vue"
 import Login from "@/components/Login.vue"
 import NewReport from "@/components/NewReport.vue"
-import Alert from "@/components/Alert.vue"
+import Settings from "@/components/Settings.vue"
 import Reports from "@/components/Reports.vue"
+import Footer from "@/components/Footer.vue"
 import axios from "axios"
 import { getCookie, getJwtFromUrl, parseJwt } from "@/utils/authHelpers"
 import { API_HOST } from "@/consts.js"
@@ -23,12 +25,14 @@ import moment from "moment"
 
 export default {
 	name: "App",
+
 	components: {
 		NavBar,
 		Login,
 		NewReport,
-		Alert,
-		Reports
+		Settings,
+		Reports,
+		Footer
 	},
 
 	async created () {
@@ -74,7 +78,7 @@ export default {
 				this.$store.commit("setIsLoggedIn", false)
 				this.$buefy.notification.open({
 					duration: 3000,
-					message: error.response ? error.response.data.description : "Something went wrong",
+					message: error.response ? error.response.data.description : this.$t("somethingWentWrong"),
 					position: "is-bottom-right",
 					type: "is-danger",
 					hasIcon: true
@@ -122,13 +126,12 @@ export default {
 				},
 				url: `${API_HOST}/sharedData/job`
 			}).then((response) => {
-				console.log(response.data)
 				// this.$store.commit("setStats", response.data)
 			}).catch(error => {
 				console.error(error)
 				this.$buefy.notification.open({
 					duration: 3000,
-					message: error.response.data.description,
+					message: error.response ? error.response.data.description : this.$t("somethingWentWrong"),
 					position: "is-bottom-right",
 					type: "is-danger",
 					hasIcon: true

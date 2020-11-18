@@ -1,8 +1,10 @@
 <template>
 	<div class="box box-login" v-if="!isLoggedIn">
-		<h2 class="mb-3">Přihlášení</h2>
-		<p class="mb-3">Pro zobrazení Vašich reportů je potřeba se přihlásit.</p>
-		<b-button tag="a" href="https://profi.toplist.cz/auth/cf5ac64a-ec50-11ea-9d60-a3da01a0b5f8" icon-left="sign-in-alt"  v-if="!isLoggedIn" type="is-warning">Přihlásit se</b-button>
+		<h2 class="mb-3">{{ $t('loginTitle') }}</h2>
+		<p class="mb-3">{{ $t('showReportsAfterLogin') }}</p>
+		<b-button tag="a" href="https://profi.toplist.cz/auth/cf5ac64a-ec50-11ea-9d60-a3da01a0b5f8" icon-left="sign-in-alt"  v-if="!isLoggedIn" type="is-warning">
+			{{ $t('login') }}
+		</b-button>
 	</div>
 </template>
 

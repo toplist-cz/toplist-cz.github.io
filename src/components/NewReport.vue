@@ -1,12 +1,12 @@
 <template>
 	<div class="box box-login box-new-report" v-if="displayNewReport">
-		<h2 class="mb-3">Nový report</h2>
+		<h2 class="mb-3">{{ $t('newReport') }}</h2>
 		<p class="mb-3 has-text-centered">
-			Report za mesíč <strong>{{ nameOfLastMonth }}</strong> ještě není vytvořen.
+			{{ $t('newReport1') }} <strong>{{ nameOfLastMonth }}</strong> {{ $t('newReport2') }}
 			<br>
-			Čas, kdy jej bude možné vytvořit, je ještě <strong>{{ newReportData.days }} dní</strong>.
+			{{ $t('newReport3') }} <strong>{{ newReportData.days }} {{ getDayWord }}</strong>.
 		</p>
-		<b-button @click="crateReport" icon-left="plus" type="is-info">Vytvořit report</b-button>
+		<b-button @click="crateReport" icon-left="plus" type="is-info">{{ $t('createReport') }}</b-button>
 	</div>
 </template>
 
@@ -23,8 +23,24 @@ export default {
 
 	computed: {
 		...mapState(["displayNewReport", "newReportData", "toplistId"]),
+
 		nameOfLastMonth () {
 			return moment().subtract(1, "month").startOf("month").format("MMMM")
+		},
+
+		getDayWord () {
+			const days = this.newReportData.days
+			let result
+
+			if (days === 1) {
+				result = this.$t("newReportDay")
+			} else if (days > 1 && days < 5) {
+				result = this.$t("newReportDaysUnder5")
+			} else {
+				result = this.$t("newReportDaysUp4")
+			}
+
+			return result
 		}
 	},
 
@@ -41,7 +57,7 @@ export default {
 				this.$store.commit("setDisplayNewReport", false)
 				this.$buefy.notification.open({
 					duration: 3000,
-					message: "Požadavek úspěšně vytvořen",
+					message: this.$t("requestCreated"),
 					position: "is-bottom-right",
 					type: "is-success",
 					hasIcon: true

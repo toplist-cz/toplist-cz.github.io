@@ -1,0 +1,19 @@
+{
+  "numberOfResults": "Počet výsledků: {0}",
+  "loginTitle": "Přihlášení",
+  "showReportsAfterLogin": "Pro zobrazení Vašich reportů je potřeba se přihlásit.",
+  "login": "Přihlásit se",
+  "reports": "Reporty",
+  "settings": "Nastavení",
+  "newReport": "Nový report",
+  "newReport1": "Report za měsíc",
+  "newReport2": "ještě není vytvořen.",
+  "newReport3": "Čas, kdy jej bude možné vytvořit, je ještě",
+  "newReportDaysUp4": "days",
+  "newReportDaysUnder5": "days",
+  "newReportDay": "den",
+  "createReport": "Vytvořit report",
+  "requestCreated": "Požadavek úspěšně vytvořen",
+  "displayedStatistics": "Zobrazené statistiky",
+  "somethingWentWrong": "Chyba. Zkuste znovu nebo kontaktujte správce webu"
+}

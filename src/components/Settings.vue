@@ -10,7 +10,7 @@
 import { mapState } from "vuex"
 
 export default {
-	name: "Alert",
+	name: "Settings",
 
 	props: ["visible", "header", "message", "type"],
 

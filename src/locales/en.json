@@ -1,0 +1,19 @@
+{
+  "numberOfResults": "Count of results: {0}",
+  "loginTitle": "Login",
+  "showReportsAfterLogin": "To view your reports, you need to log in.",
+  "login": "Sign in",
+  "reports": "Reports",
+  "settings": "Settings",
+  "newReport": "New report",
+  "newReport1": "Report for the month",
+  "newReport2": "has not been created yet.",
+  "newReport3": "The time when it will be possible to create it is still",
+  "newReportDaysUp4": "days",
+  "newReportDaysUnder5": "days",
+  "newReportDay": "day",
+  "createReport": "Create report",
+  "requestCreated": "Request created successfully",
+  "displayedStatistics": "Displayed statistics",
+  "somethingWentWrong": "Error. Please try again or contact the webmaster"
+}

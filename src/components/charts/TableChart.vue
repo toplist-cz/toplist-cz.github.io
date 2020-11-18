@@ -38,7 +38,7 @@
 				</span>
 			</b-table-column>
 		</b-table>
-		<p class="mt-4 has-text-centered-mobile">Počet výsledků: {{  getData.length }}</p>
+		<p class="mt-4 has-text-centered-mobile">{{ $t('numberOfResults', [getData.length]) }}</p>
 	</div>
 </template>
 

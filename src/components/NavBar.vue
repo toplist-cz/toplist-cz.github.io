@@ -10,7 +10,7 @@ import { mapState } from 'vuex';
 				<button class="button is-info" type="button" slot="trigger">
 					<template>
 						<b-icon icon="list" />
-						<span>Reporty</span>
+						<span>{{ $t('reports') }}</span>
 					</template>
 					<b-icon icon="angle-down" />
 				</button>
@@ -23,8 +23,12 @@ import { mapState } from 'vuex';
 					{{ report.dateFrom | moment('MMMM YYYY') | capitalize }}
 				</b-dropdown-item>
 			</b-dropdown>
-			<b-button @click="$store.commit('setSettingsBoxVisible', true)" icon-left="cog" v-if="isLoggedIn" type="is-success">Nastavení</b-button>
-			<b-button icon-left="sign-in-alt"  v-if="!isLoggedIn" type="is-warning">Přihlásit se</b-button>
+			<b-button @click="$store.commit('setSettingsBoxVisible', true)" icon-left="cog" v-if="isLoggedIn" type="is-success">
+				{{ $t('settings') }}
+			</b-button>
+			<b-button icon-left="sign-in-alt"  v-if="!isLoggedIn" type="is-warning">
+				{{ $t('login') }}
+			</b-button>
 		</div>
 	</nav>
 </template>

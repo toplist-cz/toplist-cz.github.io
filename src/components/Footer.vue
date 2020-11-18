@@ -1,10 +1,10 @@
 <template>
-	<footer>
-		<a href="">TOPlist s.r.o.</a>
+	<footer class="has-text-centered">
+		&copy; TOPlist s.r.o.
 	</footer>
 </template>
 
-<script lang="ts">
+<script>
 
 export default {
 	name: "Footer"
