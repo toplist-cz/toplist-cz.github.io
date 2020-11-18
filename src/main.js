@@ -4,13 +4,19 @@ import store from "./store/index.js"
 
 import VueMoment from "vue-moment"
 import moment from "moment"
-import "moment/locale/cs"
+// import "moment/locale/cs"
 
 import Buefy from "buefy"
 import "buefy/dist/buefy.css"
 
 import "./assets/gridlex.min.css"
 import "./assets/icofont.min.css"
+
+async function importLocales () {
+	await import("moment/locale/" + process.env.VUE_APP_LANGUAGE)
+}
+
+importLocales()
 
 Vue.use(VueMoment, {
 	moment

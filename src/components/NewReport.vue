@@ -40,7 +40,7 @@ export default {
 				console.log(response.data)
 				this.$store.commit("setDisplayNewReport", false)
 				this.$buefy.notification.open({
-					duration: 5000,
+					duration: 3000,
 					message: "Požadavek úspěšně vytvořen",
 					position: "is-bottom-right",
 					type: "is-success",
@@ -48,7 +48,7 @@ export default {
 				})
 			}).catch(error => {
 				this.$buefy.notification.open({
-					duration: 5000,
+					duration: 3000,
 					message: error.response.data.description,
 					position: "is-bottom-right",
 					type: "is-danger",

@@ -49,7 +49,6 @@ export default {
 				await this.getAvailableReports(toplistId)
 			}
 		}
-		// await this.getStats()
 		loadingComponent.close()
 	},
 
@@ -71,10 +70,11 @@ export default {
 				this.$store.commit("setIsLoggedIn", true)
 			}).catch(error => {
 				console.error(error)
+
 				this.$store.commit("setIsLoggedIn", false)
 				this.$buefy.notification.open({
-					duration: 5000,
-					message: error.response.data.description,
+					duration: 3000,
+					message: error.response ? error.response.data.description : "Something went wrong",
 					position: "is-bottom-right",
 					type: "is-danger",
 					hasIcon: true
@@ -100,7 +100,7 @@ export default {
 			}).catch(error => {
 				document.cookie = "authToken=;samesite=strict;max-age=0"
 				this.$buefy.notification.open({
-					duration: 5000,
+					duration: 3000,
 					message: error.response.data.description,
 					position: "is-bottom-right",
 					type: "is-danger",
@@ -127,7 +127,7 @@ export default {
 			}).catch(error => {
 				console.error(error)
 				this.$buefy.notification.open({
-					duration: 5000,
+					duration: 3000,
 					message: error.response.data.description,
 					position: "is-bottom-right",
 					type: "is-danger",
