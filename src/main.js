@@ -11,6 +11,7 @@ import "buefy/dist/buefy.css"
 import "./assets/gridlex.min.css"
 import "./assets/icofont.min.css"
 import i18n from "./i18n.js"
+import router from "./router/index.js"
 
 async function importLocales () {
 	let locale = process.env.VUE_APP_I18N_LOCALE
@@ -39,5 +40,6 @@ Vue.config.productionTip = false
 new Vue({
 	store,
 	i18n,
+	router,
 	render: h => h(App)
 }).$mount("#app")

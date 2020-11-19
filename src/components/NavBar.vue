@@ -52,6 +52,12 @@ export default {
 
 	methods: {
 		async getReport (report) {
+			this.$router.push({
+				name: "Home",
+				params: { reportDate: report.dateFrom },
+				query: { jwt: this.$route.query.jwt } })
+				.catch(() => {})
+
 			const loadingComponent = this.$buefy.loading.open()
 			await axios({
 				method: "get",
@@ -61,6 +67,7 @@ export default {
 				}
 			}).then((response) => {
 				this.$store.commit("setStatisticsData", response.data)
+				console.log()
 			}).catch(error => {
 				console.error(error)
 			})
@@ -71,6 +78,14 @@ export default {
 	watch: {
 		availableReports (reports) {
 			this.getReport(reports[0])
+		},
+		$route: function () {
+			if (this.availableReports.length) {
+				const report = this.availableReports.find(item => item.dateFrom === this.$route.params.reportDate)
+				if (report) {
+					this.getReport(report)
+				}
+			}
 		}
 	}
 }
