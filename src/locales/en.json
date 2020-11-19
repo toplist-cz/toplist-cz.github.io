@@ -15,5 +15,7 @@
   "createReport": "Create report",
   "requestCreated": "Request created successfully",
   "displayedStatistics": "Displayed statistics",
-  "somethingWentWrong": "Error. Please try again or contact the webmaster"
+  "somethingWentWrong": "Error. Please try again or contact the webmaster",
+  "description": "Description",
+  "value": "Value"
 }

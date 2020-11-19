@@ -94,8 +94,7 @@ export default {
 					Authorization: getCookie("authToken")
 				}
 			}).then((response) => {
-				// this.$store.commit("setAvailableReports", response.data)
-				this.$store.commit("setAvailableReports", [])
+				this.$store.commit("setAvailableReports", response.data)
 				if (response.data.length === 0 || response.data[0].dateFrom !== moment().subtract(1, "months").startOf("month").format("YYYY-MM-DD")) {
 					this.$store.commit("setDisplayNewReport", true)
 					this.$store.commit("setNewReportData", {

@@ -53,7 +53,6 @@ export default {
 					Authorization: getCookie("authToken")
 				}
 			}).then((response) => {
-				console.log(response.data)
 				this.$store.commit("setDisplayNewReport", false)
 				this.$buefy.notification.open({
 					duration: 3000,

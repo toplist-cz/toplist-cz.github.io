@@ -20,21 +20,22 @@
 		>
 			<b-table-column
 				field="description"
-				label="Popis"
+				:label="$t('description')"
 				sortable
 				v-slot="props"
+				cellClass="has-text-left"
 			>
 				{{ props.row.description }}
 			</b-table-column>
 			<b-table-column
 				field="value"
-				label="Hodnota"
+				:label="$t('value')"
 				sortable
 				numeric
 				v-slot="props"
 			>
 				<span class="tag is-success">
-					{{ props.row.value }}
+					<strong>{{ props.row.value }}</strong>
 				</span>
 			</b-table-column>
 		</b-table>
@@ -71,3 +72,10 @@ export default {
 	}
 }
 </script>
+
+<style scoped>
+strong {
+	font-weight: 700 !important;
+	color: #ffffff;
+}
+</style>

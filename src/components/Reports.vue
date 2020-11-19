@@ -1,8 +1,11 @@
 <template>
 	<div v-if="statisticsData">
-		<h2 class="title">
+		<h2 class="title title-space-between">
+			<b-button @click="previousReport" icon-left="arrow-left" type="is-warning" />
 			{{ statisticsData.dateFrom | moment('MMMM YYYY') | capitalize }}
+			<b-button @click="nextReport" icon-left="arrow-right" type="is-warning" />
 		</h2>
+
 		<GraphBox
 			v-for="statistic of statistics"
 			:key="statistic.statId"
@@ -60,8 +63,44 @@ export default {
 				})
 			})
 			this.statistics = statisticsData
-			console.log(statisticsData)
+		},
+
+		nextReport () {
+			const currentReportIndex = this.availableReports.findIndex((report) => report.dateFrom === this.$route.params.reportDate)
+			let newIndex = currentReportIndex - 1
+
+			if (currentReportIndex === 0) {
+				newIndex = this.availableReports.length - 1
+			}
+
+			this.$router.push({
+				name: "Home",
+				params: { reportDate: this.availableReports[newIndex].dateFrom },
+				query: { jwt: this.$route.query.jwt } })
+				.catch(() => {})
+		},
+
+		previousReport () {
+			const currentReportIndex = this.availableReports.findIndex((report) => report.dateFrom === this.$route.params.reportDate)
+			let newIndex = currentReportIndex + 1
+
+			if (currentReportIndex === this.availableReports.length - 1) {
+				newIndex = 0
+			}
+
+			this.$router.push({
+				name: "Home",
+				params: { reportDate: this.availableReports[newIndex].dateFrom },
+				query: { jwt: this.$route.query.jwt } })
+				.catch(() => {})
 		}
 	}
 }
 </script>
+
+<style lang="scss" scoped>
+.title-space-between{
+	display: flex;
+	justify-content: space-between;
+}
+</style>

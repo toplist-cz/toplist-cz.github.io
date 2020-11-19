@@ -5,10 +5,10 @@
 			<div v-if="type === 'graph'">
 				<div v-if="hasBothCharts" class="switcher mt-5">
 					<button @click="showLine" :class="{'c-button': true, 'active': defaultChartToShow === 'line'}">
-						<i class="icofont-chart-histogram" />
+						<i class="fas fa-chart-line" />
 					</button>
 					<button @click="showPie" :class="{'c-button': true, 'active': defaultChartToShow === 'pie'}">
-						<i class="icofont-pie-chart" />
+						<i class="fas fa-chart-pie" />
 					</button>
 				</div>
 				<LineChart :data="getLineChartData" class="mt-5" v-if="defaultChartToShow === 'line'" />
@@ -180,3 +180,12 @@ export default {
 	}
 }
 </script>
+
+<style scoped>
+.fa-chart-line{
+	font-size: 22px !important;
+}
+.fa-chart-pie{
+	font-size: 17px !important;
+}
+</style>

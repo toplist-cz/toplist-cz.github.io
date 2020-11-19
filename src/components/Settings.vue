@@ -2,7 +2,10 @@
 	<div v-if="isSettingsBoxVisible" :class="alertType">
 		<i @click="close" class="icofont-close" />
 		<h2 v-if="header" class="mb-3">{{ header }}</h2>
-		{{ message }}
+		<p class="mb-2">{{ message }}:</p>
+		<p v-for="report of availableReports" :key="report.id">
+			{{ report.dateFrom }}
+		</p>
 	</div>
 </template>
 
@@ -18,7 +21,7 @@ export default {
 		alertType () {
 			return `alert alert-${this.type}`
 		},
-		...mapState(["isSettingsBoxVisible"])
+		...mapState(["isSettingsBoxVisible", "availableReports"])
 	},
 
 	methods: {

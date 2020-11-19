@@ -6,7 +6,7 @@ import { mapState } from 'vuex';
 			TOPlist Profi
 		</div>
 		<div class="menu">
-			<b-dropdown v-if="isLoggedIn" aria-role="list">
+			<b-dropdown v-if="isLoggedIn && availableReports" aria-role="list">
 				<button class="button is-info" type="button" slot="trigger">
 					<template>
 						<b-icon icon="list" />
@@ -26,7 +26,7 @@ import { mapState } from 'vuex';
 			<b-button @click="$store.commit('setSettingsBoxVisible', true)" icon-left="cog" v-if="isLoggedIn" type="is-success">
 				{{ $t('settings') }}
 			</b-button>
-			<b-button icon-left="sign-in-alt"  v-if="!isLoggedIn" type="is-warning">
+			<b-button tag="a" v-if="!isLoggedIn" href="https://profi.toplist.cz/auth/cf5ac64a-ec50-11ea-9d60-a3da01a0b5f8" icon-left="sign-in-alt" type="is-warning">
 				{{ $t('login') }}
 			</b-button>
 		</div>
@@ -52,26 +52,27 @@ export default {
 
 	methods: {
 		async getReport (report) {
-			this.$router.push({
-				name: "Home",
-				params: { reportDate: report.dateFrom },
-				query: { jwt: this.$route.query.jwt } })
-				.catch(() => {})
+			if (this.availableReports.length) {
+				this.$router.push({
+					name: "Home",
+					params: { reportDate: report.dateFrom },
+					query: { jwt: this.$route.query.jwt } })
+					.catch(() => {})
 
-			const loadingComponent = this.$buefy.loading.open()
-			await axios({
-				method: "get",
-				url: `${API_HOST}/v1/profi/${this.toplistId}/report/${report.id}`,
-				headers: {
-					Authorization: getCookie("authToken")
-				}
-			}).then((response) => {
-				this.$store.commit("setStatisticsData", response.data)
-				console.log()
-			}).catch(error => {
-				console.error(error)
-			})
-			loadingComponent.close()
+				const loadingComponent = this.$buefy.loading.open()
+				await axios({
+					method: "get",
+					url: `${API_HOST}/v1/profi/${this.toplistId}/report/${report.id}`,
+					headers: {
+						Authorization: getCookie("authToken")
+					}
+				}).then((response) => {
+					this.$store.commit("setStatisticsData", response.data)
+				}).catch(error => {
+					console.error(error)
+				})
+				loadingComponent.close()
+			}
 		}
 	},
 

@@ -9,7 +9,6 @@ import Buefy from "buefy"
 import "buefy/dist/buefy.css"
 
 import "./assets/gridlex.min.css"
-import "./assets/icofont.min.css"
 import i18n from "./i18n.js"
 import router from "./router/index.js"
 
