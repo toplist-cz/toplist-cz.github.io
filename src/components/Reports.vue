@@ -66,7 +66,7 @@ export default {
 		},
 
 		nextReport () {
-			const currentReportIndex = this.availableReports.findIndex((report) => report.dateFrom === this.$route.params.reportDate)
+			const currentReportIndex = this.availableReports.findIndex((report) => report.dateFrom === this.$route.query.d)
 			let newIndex = currentReportIndex - 1
 
 			if (currentReportIndex === 0) {
@@ -75,13 +75,13 @@ export default {
 
 			this.$router.push({
 				name: "Home",
-				params: { reportDate: this.availableReports[newIndex].dateFrom },
-				query: { jwt: this.$route.query.jwt } })
+				// params: { reportDate: this.availableReports[newIndex].dateFrom },
+				query: { d: this.availableReports[newIndex].dateFrom, jwt: this.$route.query.jwt } })
 				.catch(() => {})
 		},
 
 		previousReport () {
-			const currentReportIndex = this.availableReports.findIndex((report) => report.dateFrom === this.$route.params.reportDate)
+			const currentReportIndex = this.availableReports.findIndex((report) => report.dateFrom === this.$route.query.d)
 			let newIndex = currentReportIndex + 1
 
 			if (currentReportIndex === this.availableReports.length - 1) {
@@ -90,8 +90,8 @@ export default {
 
 			this.$router.push({
 				name: "Home",
-				params: { reportDate: this.availableReports[newIndex].dateFrom },
-				query: { jwt: this.$route.query.jwt } })
+				// params: { reportDate: this.availableReports[newIndex].dateFrom },
+				query: { d: this.availableReports[newIndex].dateFrom, jwt: this.$route.query.jwt } })
 				.catch(() => {})
 		}
 	}

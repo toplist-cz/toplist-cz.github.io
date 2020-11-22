@@ -6,7 +6,7 @@ Vue.use(VueRouter)
 
 const routes = [
 	{
-		path: "/:reportDate?",
+		path: "/",
 		name: "Home",
 		component: Home
 	}

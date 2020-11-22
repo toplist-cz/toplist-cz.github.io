@@ -55,8 +55,8 @@ export default {
 			if (this.availableReports.length) {
 				this.$router.push({
 					name: "Home",
-					params: { reportDate: report.dateFrom },
-					query: { jwt: this.$route.query.jwt } })
+					// params: { reportDate: report.dateFrom },
+					query: { d: report.dateFrom, jwt: this.$route.query.jwt } })
 					.catch(() => {})
 
 				const loadingComponent = this.$buefy.loading.open()
@@ -82,7 +82,7 @@ export default {
 		},
 		$route: function () {
 			if (this.availableReports.length) {
-				const report = this.availableReports.find(item => item.dateFrom === this.$route.params.reportDate)
+				const report = this.availableReports.find(item => item.dateFrom === this.$route.query.d)
 				if (report) {
 					this.getReport(report)
 				}
