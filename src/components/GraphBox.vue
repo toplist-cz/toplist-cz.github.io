@@ -1,5 +1,5 @@
 <template>
-	<div class="box">
+	<div class="box" :style="isVisible">
 		<h2>{{ name }}</h2>
 		<div id="chart-types">
 			<div v-if="type === 'graph'">
@@ -43,7 +43,8 @@ export default {
 		result: Object || Array,
 		hasBothCharts: Boolean,
 		defaultChart: String,
-		statId: Number
+		statId: Number,
+		visible: Boolean
 	},
 
 	data () {
@@ -70,6 +71,9 @@ export default {
 		},
 		getSumOfResults () {
 			return this.sumValue
+		},
+		isVisible () {
+			return this.visible ? "" : "display: none"
 		}
 	},
 

@@ -90,7 +90,7 @@ export default {
 				this.$store.commit("setIsLoggedIn", false)
 				this.$buefy.notification.open({
 					duration: 3000,
-					message: error.response ? error.response.data.description + "HA" : this.$t("somethingWentWrong"),
+					message: error.response ? error.response.data.description : this.$t("somethingWentWrong"),
 					position: "is-bottom-right",
 					type: "is-danger",
 					hasIcon: true

@@ -2,12 +2,13 @@
 	<div v-if="statisticsData">
 		<h2 class="title title-space-between">
 			<b-button @click="previousReport" icon-left="arrow-left" type="is-warning" />
-			{{ statisticsData.dateFrom | moment('MMMM YYYY') | capitalize }}
+			{{ dateFrom | moment('MMMM YYYY') | capitalize }}
 			<b-button @click="nextReport" icon-left="arrow-right" type="is-warning" />
 		</h2>
 
 		<GraphBox
 			v-for="statistic of statistics"
+			:visible="statistic.visible"
 			:key="statistic.statId"
 			:statId="statistic.statId"
 			:name="statistic.title"
@@ -21,7 +22,6 @@
 
 <script>
 import { mapState } from "vuex"
-import STATS from "@/utils/stats"
 import GraphBox from "@/components/GraphBox"
 
 export default {
@@ -38,33 +38,16 @@ export default {
 	},
 
 	computed: {
-		...mapState(["statisticsData", "availableReports"])
+		...mapState(["statisticsData", "availableReports", "dateFrom"])
 	},
 
 	watch: {
 		statisticsData (newValue) {
-			this.parseData(this.statisticsData.stats)
+			this.statistics = this.statisticsData
 		}
 	},
 
 	methods: {
-		parseData (statistics) {
-			const statisticsData = []
-
-			statistics.forEach(statistic => {
-				const hasBothCharts = [4, 6, 7, 25]
-				const pieChartIsDefault = [4, 6, 7]
-				statisticsData.push({
-					...statistic,
-					renderer: STATS[statistic.statId].renderer,
-					keyword: STATS[statistic.statId].keyword,
-					bothCharts: hasBothCharts.includes(statistic.statId),
-					defaultChart: pieChartIsDefault.includes(statistic.statId) ? "pie" : "line"
-				})
-			})
-			this.statistics = statisticsData
-		},
-
 		nextReport () {
 			const currentReportIndex = this.availableReports.findIndex((report) => report.dateFrom === this.$route.query.d)
 			let newIndex = currentReportIndex - 1

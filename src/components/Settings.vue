@@ -1,11 +1,13 @@
 <template>
-	<div v-if="isSettingsBoxVisible" :class="alertType">
+	<div class="box box-login box-new-report" v-if="isSettingsBoxVisible">
 		<i @click="close" class="icofont-close" />
 		<h2 v-if="header" class="mb-3">{{ header }}</h2>
-		<p class="mb-2">{{ message }}:</p>
-		<p v-for="statistic of statisctics" :key="statistic">
-			{{statistic}}
-		</p>
+		<p class="mb-4"><strong>{{ message }}:</strong></p>
+		<div class="block">
+			<b-checkbox @input="changes" v-model="checkedStatistics" class="mb-3 mr-5" v-for="statistic of statisctics" :native-value="statistic.keyword" :key="statistic.keyword">
+				{{ statistic.title | capitalize}}
+			</b-checkbox>
+		</div>
 	</div>
 </template>
 
@@ -26,19 +28,30 @@ export default {
 
 	data () {
 		return {
-			statisctics: null
+			statisctics: null,
+			checkedStatistics: []
 		}
 	},
 
 	watch: {
 		statisticsData (newValue) {
 			this.statisctics = this.statisticsData
+			this.checkedStatistics = []
+			this.statisticsData.forEach(item => {
+				if (item.visible) {
+					this.checkedStatistics.push(item.keyword)
+				}
+			})
 		}
 	},
 
 	methods: {
 		close () {
 			this.$store.commit("setSettingsBoxVisible", false)
+		},
+
+		changes () {
+			this.$store.commit("setStatisticsVisibility", this.checkedStatistics)
 		}
 	}
 }
