@@ -39,18 +39,29 @@ export default {
 		const loadingComponent = this.$buefy.loading.open()
 		const jwt = await getJwtFromUrl()
 		if (jwt) {
-			let toplistId = null
-			for (const id in parseJwt(jwt).sco) {
-				toplistId = id
-			}
-
-			this.$store.commit("setToplistId", toplistId)
-
-			if (!getCookie("authToken")) {
-				await this.getAuth(jwt, toplistId)
+			if (!parseJwt(jwt)) {
+				this.$buefy.notification.open({
+					duration: 3000,
+					message: this.$t("invalidToken"),
+					position: "is-bottom-right",
+					type: "is-danger",
+					hasIcon: true
+				})
+				loadingComponent.close()
 			} else {
-				this.$store.commit("setIsLoggedIn", true)
-				await this.getAvailableReports(toplistId)
+				let toplistId = null
+				for (const id in parseJwt(jwt).sco) {
+					toplistId = id
+				}
+
+				this.$store.commit("setToplistId", toplistId)
+
+				if (!getCookie("authToken")) {
+					await this.getAuth(jwt, toplistId)
+				} else {
+					this.$store.commit("setIsLoggedIn", true)
+					await this.getAvailableReports(toplistId)
+				}
 			}
 		}
 		loadingComponent.close()
@@ -79,7 +90,7 @@ export default {
 				this.$store.commit("setIsLoggedIn", false)
 				this.$buefy.notification.open({
 					duration: 3000,
-					message: error.response ? error.response.data.description : this.$t("somethingWentWrong"),
+					message: error.response ? error.response.data.description + "HA" : this.$t("somethingWentWrong"),
 					position: "is-bottom-right",
 					type: "is-danger",
 					hasIcon: true

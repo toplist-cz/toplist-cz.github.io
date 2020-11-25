@@ -17,5 +17,6 @@
   "displayedStatistics": "Zobrazené statistiky",
   "somethingWentWrong": "Chyba. Zkuste znovu nebo kontaktujte správce webu",
   "description": "Popis",
-  "value": "Hodnota"
+  "value": "Hodnota",
+  "invalidToken": "Nevalidní token"
 }

@@ -3,8 +3,8 @@
 		<i @click="close" class="icofont-close" />
 		<h2 v-if="header" class="mb-3">{{ header }}</h2>
 		<p class="mb-2">{{ message }}:</p>
-		<p v-for="report of availableReports" :key="report.id">
-			{{ report.dateFrom }}
+		<p v-for="statistic of statisctics" :key="statistic">
+			{{statistic}}
 		</p>
 	</div>
 </template>
@@ -21,7 +21,19 @@ export default {
 		alertType () {
 			return `alert alert-${this.type}`
 		},
-		...mapState(["isSettingsBoxVisible", "availableReports"])
+		...mapState(["isSettingsBoxVisible", "statisticsData"])
+	},
+
+	data () {
+		return {
+			statisctics: null
+		}
+	},
+
+	watch: {
+		statisticsData (newValue) {
+			this.statisctics = this.statisticsData
+		}
 	},
 
 	methods: {

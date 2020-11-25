@@ -75,7 +75,6 @@ export default {
 
 			this.$router.push({
 				name: "Home",
-				// params: { reportDate: this.availableReports[newIndex].dateFrom },
 				query: { d: this.availableReports[newIndex].dateFrom, jwt: this.$route.query.jwt } })
 				.catch(() => {})
 		},
@@ -90,7 +89,6 @@ export default {
 
 			this.$router.push({
 				name: "Home",
-				// params: { reportDate: this.availableReports[newIndex].dateFrom },
 				query: { d: this.availableReports[newIndex].dateFrom, jwt: this.$route.query.jwt } })
 				.catch(() => {})
 		}

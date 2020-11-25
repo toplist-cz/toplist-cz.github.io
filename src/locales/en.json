@@ -17,5 +17,6 @@
   "displayedStatistics": "Displayed statistics",
   "somethingWentWrong": "Error. Please try again or contact the webmaster",
   "description": "Description",
-  "value": "Value"
+  "value": "Value",
+  "invalidToken": "Invalid token"
 }

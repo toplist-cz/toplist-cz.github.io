@@ -1,5 +1,8 @@
 <template>
 	<div>
+		<b-field class="mt-5">
+			<b-input icon="search" v-model="searchQuery.name" :placeholder="$t('description')" />
+		</b-field>
 		<b-table
 			aria-next-label="Next page"
 			aria-previous-label="Previous page"
@@ -7,7 +10,7 @@
 			aria-current-label="Current page"
 			hoverable
 			default-sort="value"
-			:data="getData"
+			:data="filter"
 			:paginated="isPaginated"
 			:per-page="perPage"
 			:current-page.sync="currentPage"
@@ -51,12 +54,6 @@ export default {
 		data: Array
 	},
 
-	computed: {
-		getData () {
-			return this.data.length ? this.data : []
-		}
-	},
-
 	data () {
 		return {
 			isPaginated: true,
@@ -67,7 +64,33 @@ export default {
 			sortIcon: "arrow-up",
 			sortIconSize: "is-small",
 			currentPage: 1,
-			perPage: 10
+			perPage: 10,
+			searchQuery: {
+				name: ""
+			}
+		}
+	},
+
+	computed: {
+		getData () {
+			return this.data.length ? this.data : []
+		},
+
+		filter: function () {
+			let result = []
+			if (this.searchQuery.name === "") {
+				result = this.data.length ? this.data : []
+			} else {
+				const nameRe = new RegExp(this.searchQuery.name, "i")
+				var datas = []
+				for (const i in this.data) {
+					if (this.data[i].description.match(nameRe)) {
+						datas.push(this.data[i])
+					}
+				}
+				result = datas
+			}
+			return result
 		}
 	}
 }
