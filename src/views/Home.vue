@@ -37,6 +37,7 @@ export default {
 
 	async created () {
 		const loadingComponent = this.$buefy.loading.open()
+		await this.getStats()
 		const jwt = await getJwtFromUrl()
 		if (jwt) {
 			if (!parseJwt(jwt)) {
@@ -86,7 +87,6 @@ export default {
 				this.$store.commit("setIsLoggedIn", true)
 			}).catch(error => {
 				console.error(error)
-
 				this.$store.commit("setIsLoggedIn", false)
 				this.$buefy.notification.open({
 					duration: 3000,
@@ -110,7 +110,8 @@ export default {
 					this.$store.commit("setDisplayNewReport", true)
 					this.$store.commit("setNewReportData", {
 						id: response.data[0].id,
-						days: this.reportCountdown()
+						days: this.reportCountdownDays(),
+						time: this.reportCountdown()
 					})
 				}
 			}).catch(error => {
@@ -124,21 +125,25 @@ export default {
 				})
 			})
 		},
-		reportCountdown () {
+		reportCountdownDays () {
 			const now = new Date().getTime()
 			const distance = moment().endOf("month").toDate() - now
 			return Math.floor(distance / (1000 * 60 * 60 * 24))
 		},
+		reportCountdown () {
+			const now = new Date().getTime()
+			return moment().endOf("month").toDate() - now
+		},
 		async getStats () {
 			await axios({
-				method: "post",
+				method: "get",
 				crossDomain: true,
 				headers: {
 					"Content-Type": "application/json; charset=utf-8"
 				},
 				url: `${API_HOST}/sharedData/job`
 			}).then((response) => {
-				// this.$store.commit("setStats", response.data)
+				this.$store.commit("setStats", response.data)
 			}).catch(error => {
 				console.error(error)
 				this.$buefy.notification.open({

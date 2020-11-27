@@ -1,10 +1,20 @@
 <template>
 	<div class="box box-login box-new-report" v-if="displayNewReport">
 		<h2 class="mb-3">{{ $t('newReport') }}</h2>
-		<p class="mb-3 has-text-centered">
+		<p class="mb-5 has-text-centered">
 			{{ $t('newReport1') }} <strong>{{ nameOfLastMonth }}</strong> {{ $t('newReport2') }}
 			<br>
-			{{ $t('newReport3') }} <strong>{{ newReportData.days }} {{ getDayWord }}</strong>.
+			{{ $t('newReport3') }} <br>
+			<countdown :time="newReportData.time">
+				<template slot-scope="props">
+					<strong>
+						{{ props.days }} {{ getDayWord }},
+						{{ props.hours }} {{ $t('hours') }},
+						{{ props.minutes }} {{ $t('minutes') }},
+						{{ props.seconds }} {{ $t('seconds') }}
+					</strong>
+				</template>
+			</countdown>
 		</p>
 		<b-button @click="crateReport" icon-left="plus" type="is-info">{{ $t('createReport') }}</b-button>
 	</div>

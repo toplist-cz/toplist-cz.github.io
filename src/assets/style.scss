@@ -75,6 +75,7 @@ body {
   box-shadow: 5px 5px 3px gainsboro;
   background-color: #ffffff;
   margin-bottom: 20px;
+  position: relative;
 
   h2 {
     color: #428bca;
@@ -168,4 +169,10 @@ body {
     -moz-box-shadow: none !important;
     -o-box-shadow: none !important;
   }
+}
+
+.close-btn{
+  position: absolute;
+  top: 10px;
+  right: 10px;
 }

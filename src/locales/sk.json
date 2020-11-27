@@ -18,5 +18,9 @@
     "somethingWentWrong": "Chyba. Skúste znovu alebo kontaktujte správca webu",
     "description": "Popis",
     "value": "Hodnota",
-    "invalidToken": "Nevalidní token"
+    "invalidToken": "Nevalidní token",
+    "logout": "Odhlásiť sa",
+    "hours": "hodín",
+    "minutes": "minút",
+    "seconds": "sekúnd"
   }

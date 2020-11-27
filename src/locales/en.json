@@ -18,5 +18,9 @@
   "somethingWentWrong": "Error. Please try again or contact the webmaster",
   "description": "Description",
   "value": "Value",
-  "invalidToken": "Invalid token"
+  "invalidToken": "Invalid token",
+  "logout": "Log out",
+  "hours": "hours",
+  "minutes": "minutes",
+  "seconds": "seconds"
 }

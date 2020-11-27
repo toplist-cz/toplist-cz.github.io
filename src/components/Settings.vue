@@ -1,10 +1,18 @@
 <template>
 	<div class="box box-login box-new-report" v-if="isSettingsBoxVisible">
+		<b-button class="close-btn" @click="close" icon-left="times" type="is-light" />
 		<i @click="close" class="icofont-close" />
 		<h2 v-if="header" class="mb-3">{{ header }}</h2>
 		<p class="mb-4"><strong>{{ message }}:</strong></p>
 		<div class="block">
-			<b-checkbox @input="changes" v-model="checkedStatistics" class="mb-3 mr-5" v-for="statistic of statisctics" :native-value="statistic.keyword" :key="statistic.keyword">
+			<b-checkbox
+				@input="changes"
+				v-model="checkedStatistics"
+				class="mb-3 mr-5"
+				v-for="statistic of statisctics"
+				:native-value="statistic.keyword"
+				:key="statistic.keyword"
+			>
 				{{ statistic.title | capitalize}}
 			</b-checkbox>
 		</div>

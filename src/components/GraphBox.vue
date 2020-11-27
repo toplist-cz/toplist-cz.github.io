@@ -1,5 +1,6 @@
 <template>
 	<div class="box" :style="isVisible">
+		<b-button class="close-btn" @click="$store.commit('setStatisticHidden', keyword)" icon-left="times" type="is-light" />
 		<h2>{{ name }}</h2>
 		<div id="chart-types">
 			<div v-if="type === 'graph'">
@@ -44,7 +45,8 @@ export default {
 		hasBothCharts: Boolean,
 		defaultChart: String,
 		statId: Number,
-		visible: Boolean
+		visible: Boolean,
+		keyword: String
 	},
 
 	data () {

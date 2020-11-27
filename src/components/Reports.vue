@@ -12,6 +12,7 @@
 			:key="statistic.statId"
 			:statId="statistic.statId"
 			:name="statistic.title"
+			:keyword="statistic.keyword"
 			:type="statistic.renderer"
 			:has-both-charts="statistic.bothCharts"
 			:result="statistic.result"

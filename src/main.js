@@ -12,6 +12,8 @@ import "./assets/gridlex.min.css"
 import i18n from "./i18n.js"
 import router from "./router/index.js"
 
+import VueCountdown from "@chenfengyuan/vue-countdown"
+
 async function importLocales () {
 	let locale = process.env.VUE_APP_I18N_LOCALE
 	if (locale === "en") {
@@ -25,6 +27,8 @@ importLocales()
 Vue.use(VueMoment, {
 	moment
 })
+
+Vue.component(VueCountdown.name, VueCountdown)
 
 Vue.use(Buefy, { defaultIconPack: "fas" })
 

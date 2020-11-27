@@ -1,6 +1,5 @@
 import Vue from "vue"
 import Vuex from "vuex"
-import STATS from "@/utils/stats"
 
 Vue.use(Vuex)
 
@@ -14,7 +13,8 @@ export default new Vuex.Store({
 		isSettingsBoxVisible: false,
 		displayNewReport: false,
 		newReportData: null,
-		dateFrom: ""
+		dateFrom: "",
+		stats: null
 	},
 	getters: {
 		toplistId: (state) => state.toplistId,
@@ -27,6 +27,9 @@ export default new Vuex.Store({
 		setToplistId: (state, toplistId) => {
 			state.toplistId = toplistId
 		},
+		setStats: (state, stats) => {
+			state.stats = stats
+		},
 		setAvailableReports: (state, reports) => {
 			state.availableReports = reports
 		},
@@ -37,8 +40,8 @@ export default new Vuex.Store({
 				const pieChartIsDefault = [4, 6, 7]
 				statisticsData.push({
 					...statistic,
-					renderer: STATS[statistic.statId].renderer,
-					keyword: STATS[statistic.statId].keyword,
+					renderer: state.stats[statistic.statId].renderer,
+					keyword: state.stats[statistic.statId].keyword,
 					bothCharts: hasBothCharts.includes(statistic.statId),
 					defaultChart: pieChartIsDefault.includes(statistic.statId) ? "pie" : "line",
 					visible: true
@@ -59,6 +62,14 @@ export default new Vuex.Store({
 				}
 			})
 		},
+		setStatisticHidden: (state, keyword) => {
+			state.statisticsData.forEach((stat, i) => {
+				if (keyword === stat.keyword) {
+					stat.visible = false
+					state.statisticsData[i] = stat
+				}
+			})
+		},
 		setSettingsBoxVisible: (state, settingsBoxVisible) => {
 			state.isSettingsBoxVisible = settingsBoxVisible
 		},
@@ -68,9 +79,5 @@ export default new Vuex.Store({
 		setNewReportData: (state, newReportData) => {
 			state.newReportData = newReportData
 		}
-	},
-	actions: {
-	},
-	modules: {
 	}
 })

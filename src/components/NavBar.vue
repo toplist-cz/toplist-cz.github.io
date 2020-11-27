@@ -26,7 +26,10 @@ import { mapState } from 'vuex';
 			<b-button @click="$store.commit('setSettingsBoxVisible', true)" icon-left="cog" v-if="isLoggedIn" type="is-success">
 				{{ $t('settings') }}
 			</b-button>
-			<b-button tag="a" v-if="!isLoggedIn" href="https://profi.toplist.cz/auth/cf5ac64a-ec50-11ea-9d60-a3da01a0b5f8" icon-left="sign-in-alt" type="is-warning">
+			<b-button @click="logout" icon-left="sign-out-alt" v-if="isLoggedIn" type="is-warning">
+				{{ $t('logout') }}
+			</b-button>
+			<b-button tag="a" v-if="!isLoggedIn" href="https://profi.toplist.cz/auth/17a84514-308d-11eb-91f4-d381fc10f328" icon-left="sign-in-alt" type="is-warning">
 				{{ $t('login') }}
 			</b-button>
 		</div>
@@ -55,7 +58,6 @@ export default {
 			if (this.availableReports.length) {
 				this.$router.push({
 					name: "Home",
-					// params: { reportDate: report.dateFrom },
 					query: { d: report.dateFrom, jwt: this.$route.query.jwt } })
 					.catch(() => {})
 
@@ -73,6 +75,11 @@ export default {
 				})
 				loadingComponent.close()
 			}
+		},
+		logout () {
+			document.cookie = "authToken=;samesite=strict;max-age=0"
+			this.$router.push({ path: "/" })
+			this.$router.go()
 		}
 	},
 
