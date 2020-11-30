@@ -52,23 +52,27 @@ export default new Vuex.Store({
 			state.statisticsData = statisticsData
 		},
 		setStatisticsVisibility: (state, visibleStatistics) => {
-			state.statisticsData.forEach((stat, i) => {
+			const statisticsDataCopy = [...state.statisticsData]
+			statisticsDataCopy.forEach((stat, i) => {
 				if (visibleStatistics.includes(stat.keyword)) {
 					stat.visible = true
-					state.statisticsData[i] = stat
+					statisticsDataCopy[i] = stat
 				} else {
 					stat.visible = false
-					state.statisticsData[i] = stat
+					statisticsDataCopy[i] = stat
 				}
 			})
+
+			state.statisticsData = statisticsDataCopy
 		},
 		setStatisticHidden: (state, keyword) => {
-			state.statisticsData.forEach((stat, i) => {
+			const statisticsDataCopy = [...state.statisticsData]
+			statisticsDataCopy.forEach((stat, i) => {
 				if (keyword === stat.keyword) {
 					stat.visible = false
-					state.statisticsData[i] = stat
 				}
 			})
+			state.statisticsData = statisticsDataCopy
 		},
 		setSettingsBoxVisible: (state, settingsBoxVisible) => {
 			state.isSettingsBoxVisible = settingsBoxVisible

@@ -1,6 +1,6 @@
 <template>
 	<div class="box" :style="isVisible">
-		<b-button class="close-btn" @click="$store.commit('setStatisticHidden', keyword)" icon-left="times" type="is-light" />
+		<b-button class="close-btn" @click="setStatisticVisibility" icon-left="times" type="is-light" />
 		<h2>{{ name }}</h2>
 		<div id="chart-types">
 			<div v-if="type === 'graph'">
@@ -80,6 +80,10 @@ export default {
 	},
 
 	methods: {
+		setStatisticVisibility () {
+			this.$store.commit("setStatisticHidden", this.keyword)
+		},
+
 		showLine () {
 			this.defaultChartToShow = "line"
 		},
