@@ -105,6 +105,7 @@ export default {
 
 			let maxValue = 0
 			let sumValue
+			let colorIndex = 0
 
 			for (let i = 0; i < Math.min(this.result.dataSeries.length, 10); i++) {
 				const dataKeyword = this.result.dataSeries[i].keyword
@@ -126,12 +127,18 @@ export default {
 					};
 				}
 
+				if (i === 8) {
+					colorIndex = 0
+				} else {
+					colorIndex += 1
+				}
+
 				const dataset = {
 					label: this.result.dataSeries[i].title || dataKeyword,
 					data: data,
 					fill: false,
-					borderColor: Colors[i],
-					backgroundColor: Colors[i],
+					borderColor: Colors[colorIndex],
+					backgroundColor: Colors[colorIndex],
 					pointRadius: 4,
 					pointHoverRadius: 6
 				}

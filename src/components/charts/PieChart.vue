@@ -1,6 +1,12 @@
 <script>
 import { Doughnut } from "vue-chartjs"
-import Colors from "@/utils/colors"
+// import Colors from "@/utils/colors"
+
+// import the plugin core
+import "chartjs-plugin-colorschemes/src/plugins/plugin.colorschemes"
+
+// import a particular color scheme
+import { SetOne9 } from "chartjs-plugin-colorschemes/src/colorschemes/colorschemes.brewer"
 
 export default {
 	name: "PieChart",
@@ -22,9 +28,16 @@ export default {
 				title: {
 					display: true
 				},
+				/*
 				elements: {
 					arc: {
 						backgroundColor: Colors
+					}
+				},
+				*/
+				plugins: {
+					colorschemes: {
+						scheme: SetOne9
 					}
 				}
 			}

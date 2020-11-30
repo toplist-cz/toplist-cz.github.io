@@ -8,10 +8,10 @@
 			<countdown :time="newReportData.time">
 				<template slot-scope="props">
 					<strong>
-						{{ props.days }} {{ getDayWord }},
-						{{ props.hours }} {{ $t('hours') }},
-						{{ props.minutes }} {{ $t('minutes') }},
-						{{ props.seconds }} {{ $t('seconds') }}
+						{{ props.days }} {{ getDayWord(props.days) }},
+						{{ props.hours }} {{ getHourWord(props.hours) }},
+						{{ props.minutes }} {{ getMinuteWord(props.minutes) }},
+						{{ props.seconds }} {{ getSecondWord(props.seconds) }}
 					</strong>
 				</template>
 			</countdown>
@@ -21,7 +21,6 @@
 </template>
 
 <script>
-// import moment from "moment"
 import { mapState } from "vuex"
 import { getCookie } from "@/utils/authHelpers"
 import { API_HOST } from "@/consts.js"
@@ -36,25 +35,50 @@ export default {
 
 		nameOfLastMonth () {
 			return moment().subtract(1, "month").startOf("month").format("MMMM")
-		},
-
-		getDayWord () {
-			const days = this.newReportData.days
-			let result
-
-			if (days === 1) {
-				result = this.$t("newReportDay")
-			} else if (days > 1 && days < 5) {
-				result = this.$t("newReportDaysUnder5")
-			} else {
-				result = this.$t("newReportDaysUp4")
-			}
-
-			return result
 		}
 	},
 
 	methods: {
+		getDayWord (val) {
+			if (val === 1) {
+				return this.$t("newReportDay")
+			} else if (val > 1 && val < 5) {
+				return this.$t("newReportDaysUnder5")
+			} else {
+				return this.$t("newReportDaysUp4")
+			}
+		},
+
+		getHourWord (val) {
+			if (val === 1) {
+				return this.$t("newReportHour")
+			} else if (val > 1 && val < 5) {
+				return this.$t("newReportHoursUnder5")
+			} else {
+				return this.$t("newReportHoursUp4")
+			}
+		},
+
+		getMinuteWord (val) {
+			if (val === 1) {
+				return this.$t("newReportMinute")
+			} else if (val > 1 && val < 5) {
+				return this.$t("newReportMinutesUnder5")
+			} else {
+				return this.$t("newReportMinutesUp4")
+			}
+		},
+
+		getSecondWord (val) {
+			if (val === 1) {
+				return this.$t("newReportSecond")
+			} else if (val > 1 && val < 5) {
+				return this.$t("newReportSecondsUnder5")
+			} else {
+				return this.$t("newReportSecondsUp4")
+			}
+		},
+
 		async crateReport () {
 			await axios({
 				method: "get",

@@ -1,3 +1,6 @@
+export default ["#e41a1c", "#377eb8", "#4daf4a", "#984ea3", "#ff7f00", "#ffff33", "#a65628", "#f781bf", "#999999"]
+
+/*
 export default [
 	"#40a1ec",
 	"#ce7d78",
@@ -280,3 +283,4 @@ export default [
 	"#dce77a",
 	"#77ecca"
 ]
+*/
