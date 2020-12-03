@@ -1,6 +1,5 @@
 <script>
 import { Line } from "vue-chartjs"
-// import Colors from "@/utils/colors"
 
 export default {
 	name: "LineChart",

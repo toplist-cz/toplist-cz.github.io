@@ -1,39 +1,64 @@
 import { mapState } from 'vuex';
 <template>
-	<nav class="c-navbar">
-		<div class="logo">
-			<img src="@/assets/logo-toplist.png" alt="logo TOPList">
-			TOPlist Profi
-		</div>
-		<div class="menu">
-			<b-dropdown v-if="isLoggedIn && availableReports" aria-role="list">
-				<button class="button is-info" type="button" slot="trigger">
-					<template>
-						<b-icon icon="list" />
-						<span>{{ $t('reports') }}</span>
-					</template>
-					<b-icon icon="angle-down" />
-				</button>
-				<b-dropdown-item
-					v-for="report of availableReports"
-					:key="report.id"
-					aria-role="listitem"
-					@click="getReport(report)"
+	<div>
+		<nav class="c-navbar">
+			<div class="logo">
+				<img src="@/assets/logo-toplist.png" alt="logo TOPList">
+				TOPlist Profi
+			</div>
+			<div class="menu">
+				<b-button @click="$store.commit('setSettingsBoxVisible', true)" icon-left="cog" v-if="isLoggedIn" type="is-success">
+					{{ $t('settings') }}
+				</b-button>
+				<b-button @click="logout" icon-left="sign-out-alt" v-if="isLoggedIn" type="is-warning">
+					{{ $t('logout') }}
+				</b-button>
+				<b-button tag="a" v-if="!isLoggedIn" href="https://profi.toplist.cz/auth/17a84514-308d-11eb-91f4-d381fc10f328" icon-left="sign-in-alt" type="is-warning">
+					{{ $t('login') }}
+				</b-button>
+			</div>
+		</nav>
+		<div class="fixed-reports" :style="fixedReportsTop">
+			<b-collapse v-if="isLoggedIn && availableReports" :open.sync="fixedReports" class="card " animation="slide" aria-id="contentIdForA11y3">
+				<div
+					slot="trigger"
+					slot-scope="props"
+					class="card-header"
+					role="button"
+					aria-controls="contentIdForA11y3"
 				>
-					{{ report.dateFrom | moment('MMMM YYYY') | capitalize }}
-				</b-dropdown-item>
-			</b-dropdown>
-			<b-button @click="$store.commit('setSettingsBoxVisible', true)" icon-left="cog" v-if="isLoggedIn" type="is-success">
-				{{ $t('settings') }}
-			</b-button>
-			<b-button @click="logout" icon-left="sign-out-alt" v-if="isLoggedIn" type="is-warning">
-				{{ $t('logout') }}
-			</b-button>
-			<b-button tag="a" v-if="!isLoggedIn" href="https://profi.toplist.cz/auth/17a84514-308d-11eb-91f4-d381fc10f328" icon-left="sign-in-alt" type="is-warning">
-				{{ $t('login') }}
-			</b-button>
+					<p class="card-header-title">
+						<b-icon
+							class="mr-3"
+							icon="list"
+							size="is-small"
+						/>
+						{{ $t('reports') }}
+					</p>
+					<a class="card-header-icon">
+						<b-icon
+							:icon="props.open ? 'arrow-down' : 'arrow-down'"
+						/>
+					</a>
+				</div>
+				<div class="card-content">
+					<div class="content">
+						<b-button
+							v-scroll-to="'body, 50px'"
+							v-for="report of availableReports"
+							:key="report.id"
+							type="is-light"
+							expanded
+							class="mb-1"
+							@click="getReport(report)"
+						>
+							{{ report.dateFrom | moment('MMMM YYYY') | capitalize }}
+						</b-button>
+					</div>
+				</div>
+			</b-collapse>
 		</div>
-	</nav>
+	</div>
 </template>
 
 <script>
@@ -41,20 +66,33 @@ import { mapState } from "vuex"
 import axios from "axios"
 import { API_HOST } from "@/consts"
 import { getCookie } from "@/utils/authHelpers"
+import scrollPosition from "@/utils/scrollPosition"
 
 export default {
 	name: "NavBar",
 
+	mixins: [scrollPosition("position")],
+
 	data () {
-		return {}
+		return {
+			fixedReports: false
+		}
 	},
 
 	computed: {
-		...mapState(["availableReports", "toplistId", "isLoggedIn"])
+		...mapState(["availableReports", "toplistId", "isLoggedIn"]),
+		fixedReportsTop () {
+			if (this.position[1] >= 40) {
+				return "top: 10px;"
+			}
+			return "top: 80px;"
+		}
 	},
 
 	methods: {
 		async getReport (report) {
+			this.fixedReports = false
+
 			if (this.availableReports.length) {
 				this.$router.push({
 					name: "Home",
@@ -73,6 +111,7 @@ export default {
 				}).catch(error => {
 					console.error(error)
 				})
+
 				loadingComponent.close()
 			}
 		},
