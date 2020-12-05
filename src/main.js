@@ -12,7 +12,7 @@ import "./assets/gridlex.min.css"
 import i18n from "./i18n.js"
 import router from "./router/index.js"
 
-import vueScrollTo from "vue-scroll-to"
+import vueScrollTo from "vue-scrollto"
 
 import VueCountdown from "@chenfengyuan/vue-countdown"
 

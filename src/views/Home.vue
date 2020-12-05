@@ -1,6 +1,7 @@
 <template>
 	<div>
 		<NavBar />
+		<SideBar />
 		<div class="container">
 			<Settings :header="$t('settings')" :message="$t('displayedStatistics')" type="success" />
 			<Login />
@@ -8,11 +9,13 @@
 			<Reports />
 			<Footer />
 		</div>
+
 	</div>
 </template>
 
 <script>
 import NavBar from "@/components/NavBar.vue"
+import SideBar from "@/components/SideBar.vue"
 import Login from "@/components/Login.vue"
 import NewReport from "@/components/NewReport.vue"
 import Settings from "@/components/Settings.vue"
@@ -32,7 +35,8 @@ export default {
 		NewReport,
 		Settings,
 		Reports,
-		Footer
+		Footer,
+		SideBar
 	},
 
 	async created () {

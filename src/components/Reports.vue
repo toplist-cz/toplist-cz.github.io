@@ -1,5 +1,19 @@
 <template>
-	<div v-if="statisticsData">
+	<div class="reports-box" v-if="statisticsData">
+		<div class="box fixed-reports-nav" :style="fixedReportsTop">
+			<b-button
+				v-scroll-to="{el: `.stat${statistic.statId}`, offset: -70,}"
+				@click="scrollToStat(statistic.statId)"
+				v-for="statistic of statistics"
+				:key="statistic.statId"
+				type="is-light"
+				expanded
+				class="mb-1"
+			>
+				{{ statistic.title }}
+			</b-button>
+		</div>
+
 		<h2 class="title title-space-between">
 			<b-button @click="previousReport" icon-left="arrow-left" type="is-warning" />
 			{{ dateFrom | moment('MMMM YYYY') | capitalize }}
@@ -24,9 +38,12 @@
 <script>
 import { mapState } from "vuex"
 import GraphBox from "@/components/GraphBox"
+import scrollPosition from "@/utils/scrollPosition"
 
 export default {
 	name: "Reports",
+
+	mixins: [scrollPosition("position")],
 
 	components: {
 		GraphBox
@@ -39,7 +56,13 @@ export default {
 	},
 
 	computed: {
-		...mapState(["statisticsData", "availableReports", "dateFrom"])
+		...mapState(["statisticsData", "availableReports", "dateFrom"]),
+		fixedReportsTop () {
+			if (this.position[1] >= 480) {
+				return "top: 10px;position: fixed;"
+			}
+			return "top: 69px;"
+		}
 	},
 
 	watch: {
@@ -49,6 +72,12 @@ export default {
 	},
 
 	methods: {
+		scrollToStat (id) {
+
+			// VueScrollTo.scrollTo(".stat" + id + ", 50px", 200)
+			// const cancelScroll = VueScrollTo.scrollTo(".stat" + id + ", 50px", 200)
+			// cancelScroll()
+		},
 		nextReport () {
 			const currentReportIndex = this.availableReports.findIndex((report) => report.dateFrom === this.$route.query.d)
 			let newIndex = currentReportIndex - 1

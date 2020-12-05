@@ -65,7 +65,7 @@ body {
 
 .container {
   margin: 0 auto;
-  max-width: 1000px !important;
+  max-width: 900px !important;
   padding: 110px 10px 70px;
 }
 
@@ -182,12 +182,35 @@ body {
   padding: 0 10px;
   z-index: 50;
   width: 100%;
-  max-width: 1000px !important;
+  max-width: 900px !important;
   left: 50%;
   transform: translateX(-50%);
 
   .card-content {
     max-height: 312px;
     overflow-y: scroll;
+  }
+}
+
+.b-sidebar .sidebar-content.is-fixed{
+  display: none;
+  top: 52px;
+  position: fixed;
+  left: 0;
+  height: calc(100% - 52px);
+}
+
+.reports-box {
+  position: relative;
+  .fixed-reports-nav {
+    position: absolute;
+    width: 100%;
+    max-width: 230px;
+    margin-left: -240px;
+
+    .button{
+      font-size: 14px;
+      font-weight: bold;
+    }
   }
 }

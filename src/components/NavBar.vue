@@ -44,7 +44,7 @@ import { mapState } from 'vuex';
 				<div class="card-content">
 					<div class="content">
 						<b-button
-							v-scroll-to="'body, 50px'"
+							v-scroll-to="'body'"
 							v-for="report of availableReports"
 							:key="report.id"
 							type="is-light"

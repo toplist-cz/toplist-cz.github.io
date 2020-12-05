@@ -1,5 +1,5 @@
 <template>
-	<div class="box" :style="isVisible">
+	<div :class="graphBoxClass" :style="isVisible">
 		<b-button class="close-btn" @click="setStatisticVisibility" icon-left="times" type="is-light" />
 		<h2>{{ name }}</h2>
 		<div id="chart-types">
@@ -76,6 +76,9 @@ export default {
 		},
 		isVisible () {
 			return this.visible ? "" : "display: none"
+		},
+		graphBoxClass () {
+			return `box stat${this.statId}`
 		}
 	},
 
