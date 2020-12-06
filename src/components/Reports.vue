@@ -1,6 +1,6 @@
 <template>
 	<div class="reports-box" v-if="statisticsData">
-		<div class="box fixed-reports-nav" :style="fixedReportsTop">
+		<div v-show="statistics.length" class="box fixed-reports-nav" :style="fixedReportsTop">
 			<b-button
 				v-scroll-to="{el: `.stat${statistic.statId}`, offset: -70,}"
 				@click="scrollToStat(statistic.statId)"
