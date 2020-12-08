@@ -51,18 +51,24 @@ export default {
 
 	data () {
 		return {
-			statistics: []
+			statistics: [],
+			reportsBoxTop: null
 		}
 	},
 
 	computed: {
 		...mapState(["statisticsData", "availableReports", "dateFrom"]),
 		fixedReportsTop () {
-			if (this.position[1] >= 480) {
+			if (this.reportsBoxTop && this.position[1] >= (this.reportsBoxTop + 109)) {
 				return "top: 10px;position: fixed;"
 			}
+
 			return "top: 69px;"
 		}
+	},
+
+	updated () {
+		this.reportsBoxTop = document.querySelector(".reports-box").offsetTop
 	},
 
 	watch: {

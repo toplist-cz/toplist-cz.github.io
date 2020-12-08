@@ -1,4 +1,3 @@
-import { mapState } from 'vuex';
 <template>
 	<div>
 		<nav class="c-navbar">
@@ -82,8 +81,9 @@ export default {
 	computed: {
 		...mapState(["availableReports", "toplistId", "isLoggedIn"]),
 		fixedReportsTop () {
-			if (this.position[1] >= 40) {
-				return "top: 10px;"
+			if (this.position[1] >= 70) {
+				return "top: 10px;position:fixed;"
+				// return "top: 90px"
 			}
 			return "top: 80px;"
 		}
