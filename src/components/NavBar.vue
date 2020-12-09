@@ -17,54 +17,11 @@
 				</b-button>
 			</div>
 		</nav>
-		<div class="fixed-reports" :style="fixedReportsTop">
-			<b-collapse v-if="isLoggedIn && availableReports" :open.sync="fixedReports" class="card " animation="slide" aria-id="contentIdForA11y3">
-				<div
-					slot="trigger"
-					slot-scope="props"
-					class="card-header"
-					role="button"
-					aria-controls="contentIdForA11y3"
-				>
-					<p class="card-header-title">
-						<b-icon
-							class="mr-3"
-							icon="list"
-							size="is-small"
-						/>
-						{{ $t('reports') }}
-					</p>
-					<a class="card-header-icon">
-						<b-icon
-							:icon="props.open ? 'arrow-down' : 'arrow-down'"
-						/>
-					</a>
-				</div>
-				<div class="card-content">
-					<div class="content">
-						<b-button
-							v-scroll-to="'body'"
-							v-for="report of availableReports"
-							:key="report.id"
-							type="is-light"
-							expanded
-							class="mb-1"
-							@click="getReport(report)"
-						>
-							{{ report.dateFrom | moment('MMMM YYYY') | capitalize }}
-						</b-button>
-					</div>
-				</div>
-			</b-collapse>
-		</div>
 	</div>
 </template>
 
 <script>
 import { mapState } from "vuex"
-import axios from "axios"
-import { API_HOST } from "@/consts"
-import { getCookie } from "@/utils/authHelpers"
 import scrollPosition from "@/utils/scrollPosition"
 
 export default {
@@ -79,42 +36,10 @@ export default {
 	},
 
 	computed: {
-		...mapState(["availableReports", "toplistId", "isLoggedIn"]),
-		fixedReportsTop () {
-			if (this.position[1] >= 70) {
-				return "top: 10px;position:fixed;"
-				// return "top: 90px"
-			}
-			return "top: 80px;"
-		}
+		...mapState(["availableReports", "toplistId", "isLoggedIn"])
 	},
 
 	methods: {
-		async getReport (report) {
-			this.fixedReports = false
-
-			if (this.availableReports.length) {
-				this.$router.push({
-					name: "Home",
-					query: { d: report.dateFrom, jwt: this.$route.query.jwt } })
-					.catch(() => {})
-
-				const loadingComponent = this.$buefy.loading.open()
-				await axios({
-					method: "get",
-					url: `${API_HOST}/v1/profi/${this.toplistId}/report/${report.id}`,
-					headers: {
-						Authorization: getCookie("authToken")
-					}
-				}).then((response) => {
-					this.$store.commit("setStatisticsData", response.data)
-				}).catch(error => {
-					console.error(error)
-				})
-
-				loadingComponent.close()
-			}
-		},
 		logout () {
 			document.cookie = "authToken=;samesite=strict;max-age=0"
 			this.$router.push({ path: "/" })
@@ -123,17 +48,7 @@ export default {
 	},
 
 	watch: {
-		availableReports (reports) {
-			this.getReport(reports[0])
-		},
-		$route: function () {
-			if (this.availableReports.length) {
-				const report = this.availableReports.find(item => item.dateFrom === this.$route.query.d)
-				if (report) {
-					this.getReport(report)
-				}
-			}
-		}
+
 	}
 }
 </script>

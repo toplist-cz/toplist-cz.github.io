@@ -1,12 +1,11 @@
 <template>
-	<div class="reports-box" v-if="statisticsData">
+	<div class="reports-box" v-if="statisticsData && isLoggedIn">
 		<div v-show="statistics.length" class="box fixed-reports-nav" :style="fixedReportsTop">
 			<b-button
 				v-scroll-to="{el: `.stat${statistic.statId}`, offset: -70,}"
-				@click="scrollToStat(statistic.statId)"
 				v-for="statistic of statistics"
 				:key="statistic.statId"
-				type="is-light"
+				:type="getReportButtonType(statistic.statId)"
 				expanded
 				class="mb-1"
 			>
@@ -14,10 +13,26 @@
 			</b-button>
 		</div>
 
-		<h2 class="title title-space-between">
-			<b-button @click="previousReport" icon-left="arrow-left" type="is-warning" />
-			{{ dateFrom | moment('MMMM YYYY') | capitalize }}
-			<b-button @click="nextReport" icon-left="arrow-right" type="is-warning" />
+		<h2 class="title title-space-between fixed-title" :style="fixedTitleTop">
+			<b-button size="is-medium" @click="previousReport" icon-left="arrow-left" type="is-warning" />
+			<!--{{ dateFrom | moment('MMMM YYYY') | capitalize }}-->
+			<b-select
+				icon="list"
+				:placeholder="dateFrom | moment('MMMM YYYY') | capitalize"
+				size="is-medium"
+				expanded
+				v-model="selectedReport"
+				@input="getReport"
+			>
+				<option
+					v-for="report of availableReports"
+					:key="report.id"
+					:value="report"
+				>
+					{{ report.dateFrom | moment('MMMM YYYY') | capitalize }}
+				</option>
+			</b-select>
+			<b-button size="is-medium" @click="nextReport" icon-left="arrow-right" type="is-warning" />
 		</h2>
 
 		<GraphBox
@@ -31,6 +46,7 @@
 			:has-both-charts="statistic.bothCharts"
 			:result="statistic.result"
 			:default-chart="statistic.defaultChart"
+			@visibleStatistic="changeVisibleStatistic"
 		/>
 	</div>
 </template>
@@ -39,6 +55,9 @@
 import { mapState } from "vuex"
 import GraphBox from "@/components/GraphBox"
 import scrollPosition from "@/utils/scrollPosition"
+import axios from "axios"
+import { API_HOST } from "@/consts"
+import { getCookie } from "@/utils/authHelpers"
 
 export default {
 	name: "Reports",
@@ -52,37 +71,88 @@ export default {
 	data () {
 		return {
 			statistics: [],
-			reportsBoxTop: null
+			reportsBoxTop: null,
+			reportsTitleTop: null,
+			selectedReport: null,
+			activeReportButton: null
 		}
 	},
 
 	computed: {
-		...mapState(["statisticsData", "availableReports", "dateFrom"]),
+		...mapState(["statisticsData", "availableReports", "dateFrom", "toplistId", "isLoggedIn"]),
 		fixedReportsTop () {
-			if (this.reportsBoxTop && this.position[1] >= (this.reportsBoxTop + 109)) {
+			if (this.reportsBoxTop && this.position[1] >= (this.reportsBoxTop + 120)) {
 				return "top: 10px;position: fixed;"
 			}
 
-			return "top: 69px;"
+			return "top: 80px;"
+		},
+		fixedTitleTop () {
+			if (this.reportsTitleTop && this.position[1] >= this.reportsBoxTop + 43) {
+				return "top: 10px;position: fixed;"
+			}
+
+			return "top: 1px;"
 		}
 	},
 
 	updated () {
 		this.reportsBoxTop = document.querySelector(".reports-box").offsetTop
+		this.reportsTitleTop = document.querySelector(".fixed-title").offsetTop
 	},
 
 	watch: {
 		statisticsData (newValue) {
 			this.statistics = this.statisticsData
+		},
+		availableReports (reports) {
+			this.getReport(reports[0])
+		},
+		$route: function () {
+			if (this.availableReports.length) {
+				const report = this.availableReports.find(item => item.dateFrom === this.$route.query.d)
+				if (report) {
+					this.getReport(report)
+				}
+			}
 		}
 	},
 
 	methods: {
-		scrollToStat (id) {
+		getReportButtonType (e) {
+			if (this.activeReportButton === e) {
+				return "is-light is-info"
+			}
 
-			// VueScrollTo.scrollTo(".stat" + id + ", 50px", 200)
-			// const cancelScroll = VueScrollTo.scrollTo(".stat" + id + ", 50px", 200)
-			// cancelScroll()
+			return "is-light"
+		},
+		async getReport (report) {
+			this.fixedReports = false
+			this.selectedReport = report
+			if (this.availableReports.length) {
+				this.$router.push({
+					name: "Home",
+					query: { d: report.dateFrom, jwt: this.$route.query.jwt } })
+					.catch(() => {})
+
+				const loadingComponent = this.$buefy.loading.open()
+				await axios({
+					method: "get",
+					url: `${API_HOST}/v1/profi/${this.toplistId}/report/${report.id}`,
+					headers: {
+						Authorization: getCookie("authToken")
+					}
+				}).then((response) => {
+					this.$store.commit("setStatisticsData", response.data)
+				}).catch(error => {
+					console.error(error)
+				})
+
+				loadingComponent.close()
+			}
+		},
+		changeVisibleStatistic (statId) {
+			this.activeReportButton = statId
 		},
 		nextReport () {
 			const currentReportIndex = this.availableReports.findIndex((report) => report.dateFrom === this.$route.query.d)
@@ -119,5 +189,9 @@ export default {
 .title-space-between{
 	display: flex;
 	justify-content: space-between;
+}
+
+select, option{
+	text-align: center;
 }
 </style>

@@ -66,7 +66,7 @@ body {
 .container {
   margin: 0 auto;
   max-width: 900px !important;
-  padding: 110px 10px 70px;
+  padding: 50px 10px 70px;
 }
 
 .box {
@@ -202,15 +202,33 @@ body {
 
 .reports-box {
   position: relative;
+  padding-top: 80px;
   .fixed-reports-nav {
     position: absolute;
     width: 100%;
     max-width: 230px;
     margin-left: -240px;
+    //right: 0;
+    //margin-right: -240px;
 
     .button{
       font-size: 14px;
       font-weight: bold;
     }
+  }
+}
+
+.fixed-title {
+  position: absolute;
+  top: 1px;
+  //left: 0;
+  width: 100%;
+  max-width: 880px;
+  left: 50%;
+  z-index: 100;
+  transform: translateX(-50%);
+  .control {
+    width: 100%;
+    padding: 0 10px;
   }
 }

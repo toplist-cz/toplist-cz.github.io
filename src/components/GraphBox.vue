@@ -1,5 +1,15 @@
 <template>
-	<div :class="graphBoxClass" :style="isVisible">
+	<div
+		v-observe-visibility="{
+			callback: visibilityChanged,
+			intersection: {
+				rootMargin: '500px 0px 0px 0px',
+				threshold: 0.3,
+			},
+		}"
+		:class="graphBoxClass"
+		:style="isVisible"
+	>
 		<b-button class="close-btn" @click="setStatisticVisibility" icon-left="times" type="is-light" />
 		<h2>{{ name }}</h2>
 		<div id="chart-types">
@@ -85,6 +95,13 @@ export default {
 	methods: {
 		setStatisticVisibility () {
 			this.$store.commit("setStatisticHidden", this.keyword)
+		},
+
+		visibilityChanged (visible, entry) {
+			if (visible) {
+				console.log(visible, entry)
+				this.$emit("visibleStatistic", this.statId)
+			}
 		},
 
 		showLine () {

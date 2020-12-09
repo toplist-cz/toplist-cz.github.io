@@ -2,7 +2,7 @@
 	<div>
 		<NavBar />
 		<SideBar />
-		<div class="container">
+		<div class="container" style="position: relative">
 			<Settings :header="$t('settings')" :message="$t('displayedStatistics')" type="success" />
 			<Login />
 			<NewReport />
@@ -91,7 +91,11 @@ export default {
 				this.$store.commit("setIsLoggedIn", true)
 			}).catch(error => {
 				console.error(error)
+				this.$router.push({
+					name: "Home",
+					query: { d: "", jwt: "" } })
 				this.$store.commit("setIsLoggedIn", false)
+				/*
 				this.$buefy.notification.open({
 					duration: 3000,
 					message: error.response ? error.response.data.description : this.$t("somethingWentWrong"),
@@ -99,6 +103,7 @@ export default {
 					type: "is-danger",
 					hasIcon: true
 				})
+				*/
 			})
 		},
 		async getAvailableReports (id) {
