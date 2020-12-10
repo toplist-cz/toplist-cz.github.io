@@ -45,6 +45,7 @@ export default {
 		const jwt = await getJwtFromUrl()
 		if (jwt) {
 			if (!parseJwt(jwt)) {
+				/*
 				this.$buefy.notification.open({
 					duration: 3000,
 					message: this.$t("invalidToken"),
@@ -52,6 +53,12 @@ export default {
 					type: "is-danger",
 					hasIcon: true
 				})
+				*/
+				await this.$router.push({
+					name: "Home",
+					query: { d: "", jwt: "" } })
+				this.$store.commit("setIsLoggedIn", false)
+
 				loadingComponent.close()
 			} else {
 				let toplistId = null
@@ -132,6 +139,7 @@ export default {
 					type: "is-danger",
 					hasIcon: true
 				})
+				console.error(error)
 			})
 		},
 		reportCountdownDays () {
