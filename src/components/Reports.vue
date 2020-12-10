@@ -4,6 +4,7 @@
 			<b-button
 				v-scroll-to="{el: `.stat${statistic.statId}`, offset: -70,}"
 				v-for="statistic of statistics"
+				v-show="statistic.visible"
 				:key="statistic.statId"
 				:type="getReportButtonType(statistic.statId)"
 				expanded

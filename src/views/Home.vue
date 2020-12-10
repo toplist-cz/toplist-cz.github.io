@@ -9,7 +9,6 @@
 			<Reports />
 			<Footer />
 		</div>
-
 	</div>
 </template>
 
