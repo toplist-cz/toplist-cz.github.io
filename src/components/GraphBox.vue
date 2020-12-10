@@ -1,14 +1,8 @@
 <template>
 	<div
-		v-observe-visibility="{
-			callback: visibilityChanged,
-			intersection: {
-				rootMargin: '500px 0px 0px 0px',
-				threshold: 0.3,
-			},
-		}"
 		:class="graphBoxClass"
 		:style="isVisible"
+		v-view="viewHandler"
 	>
 		<b-button class="close-btn" @click="setStatisticVisibility" icon-left="times" type="is-light" />
 		<h2>{{ name }}</h2>
@@ -81,9 +75,6 @@ export default {
 		getTableData () {
 			return this.tableDataParser()
 		},
-		getSumOfResults () {
-			return this.sumValue
-		},
 		isVisible () {
 			return this.visible ? "" : "display: none"
 		},
@@ -93,15 +84,13 @@ export default {
 	},
 
 	methods: {
-		setStatisticVisibility () {
-			this.$store.commit("setStatisticHidden", this.keyword)
-		},
-
-		visibilityChanged (visible, entry) {
-			if (visible) {
-				console.log(visible, entry)
+		viewHandler (e) {
+			if (e.percentInView === 1) {
 				this.$emit("visibleStatistic", this.statId)
 			}
+		},
+		setStatisticVisibility () {
+			this.$store.commit("setStatisticHidden", this.keyword)
 		},
 
 		showLine () {

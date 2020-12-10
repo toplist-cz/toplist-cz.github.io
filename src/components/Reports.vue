@@ -103,10 +103,21 @@ export default {
 
 	watch: {
 		statisticsData (newValue) {
-			this.statistics = this.statisticsData
+			this.statistics = newValue
 		},
 		availableReports (reports) {
-			this.getReport(reports[0])
+			let reportToDisplay = reports[0]
+			if (sessionStorage.getItem("toplistReportDateFrom")) {
+				const reportFromStorage = reports.find(
+					report => report.dateFrom === sessionStorage.getItem("toplistReportDateFrom")
+				)
+
+				if (reportFromStorage) {
+					reportToDisplay = reportFromStorage
+				}
+			}
+
+			this.getReport(reportToDisplay)
 		},
 		$route: function () {
 			if (this.availableReports.length) {
@@ -143,7 +154,9 @@ export default {
 						Authorization: getCookie("authToken")
 					}
 				}).then((response) => {
+					this.$scrollTo("body", { offset: 70 })
 					this.$store.commit("setStatisticsData", response.data)
+					sessionStorage.setItem("toplistReportDateFrom", response.data.dateFrom)
 				}).catch(error => {
 					console.error(error)
 				})

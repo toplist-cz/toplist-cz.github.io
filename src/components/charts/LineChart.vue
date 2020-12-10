@@ -48,6 +48,12 @@ export default {
 
 	mounted () {
 		this.renderChart(this.data, this.getLineChartOptions)
+	},
+
+	watch: {
+		data: function () {
+			this.renderChart(this.data, this.getLineChartOptions)
+		}
 	}
 }
 </script>

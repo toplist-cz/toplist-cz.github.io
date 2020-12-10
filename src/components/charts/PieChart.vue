@@ -28,13 +28,6 @@ export default {
 				title: {
 					display: true
 				},
-				/*
-				elements: {
-					arc: {
-						backgroundColor: Colors
-					}
-				},
-				*/
 				plugins: {
 					colorschemes: {
 						scheme: SetOne9
@@ -46,6 +39,12 @@ export default {
 
 	mounted () {
 		this.renderChart(this.data, this.options)
+	},
+
+	watch: {
+		data: function () {
+			this.renderChart(this.data, this.options)
+		}
 	}
 }
 </script>
