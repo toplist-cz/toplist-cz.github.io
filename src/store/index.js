@@ -8,7 +8,7 @@ export default new Vuex.Store({
 		API_URL: "https://profi.toplist.cz",
 		isLoggedIn: false,
 		toplistId: null,
-		availableReports: null,
+		availableReports: [],
 		statisticsData: null,
 		isSettingsBoxVisible: false,
 		displayNewReport: false,
