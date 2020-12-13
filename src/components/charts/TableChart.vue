@@ -10,6 +10,7 @@
 			aria-current-label="Current page"
 			hoverable
 			default-sort="value"
+			:mobile-cards="false"
 			:data="filter"
 			:paginated="isPaginated"
 			:per-page="perPage"

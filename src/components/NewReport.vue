@@ -1,5 +1,5 @@
 <template>
-	<div class="box box-login box-new-report" v-if="displayNewReport">
+	<div class="box box-login box-new-report" v-if="displayNewReport && isLoggedIn">
 		<h2 class="mb-3">{{ $t('newReport') }}</h2>
 		<p class="mb-5 has-text-centered">
 			{{ $t('newReport1') }} <strong>{{ nameOfLastMonth }}</strong> {{ $t('newReport2') }}
@@ -31,7 +31,7 @@ export default {
 	name: "NewReport",
 
 	computed: {
-		...mapState(["displayNewReport", "newReportData", "toplistId"]),
+		...mapState(["displayNewReport", "newReportData", "toplistId", "isLoggedIn"]),
 
 		nameOfLastMonth () {
 			return moment().subtract(1, "month").startOf("month").format("MMMM")
@@ -86,21 +86,26 @@ export default {
 				headers: {
 					Authorization: getCookie("authToken")
 				}
-			}).then((response) => {
+			}).then(() => {
 				this.$store.commit("setDisplayNewReport", false)
 				this.$buefy.notification.open({
 					duration: 3000,
 					message: this.$t("requestCreated"),
-					position: "is-bottom-right",
+					position: "is-bottom",
 					type: "is-success",
 					hasIcon: true
 				})
-			}).catch(error => {
+			}).catch(() => {
+				this.$router.push({
+					name: "Home",
+					query: { d: "", jwt: "" } })
+				this.$store.commit("setIsLoggedIn", false)
+
 				this.$buefy.notification.open({
 					duration: 3000,
-					message: error.response.data.description,
-					position: "is-bottom-right",
-					type: "is-danger",
+					message: this.$t("somethingWentWrong"),
+					position: "is-bottom",
+					type: "is-warning",
 					hasIcon: true
 				})
 			})

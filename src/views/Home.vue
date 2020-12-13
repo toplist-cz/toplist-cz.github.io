@@ -80,7 +80,7 @@ export default {
 
 	methods: {
 		async getAuth (jwt, topListId) {
-			sessionStorage.setItem("toplistJwt", jwt)
+			// sessionStorage.setItem("toplistJwt", jwt)
 			await axios({
 				method: "post",
 				crossDomain: true,
@@ -92,24 +92,23 @@ export default {
 					token: jwt
 				})
 			}).then((response) => {
-				document.cookie = `authToken=${response.data.token};samesite=strict;max-age=3600`
+				// document.cookie = `authToken=${response.data.token};samesite=strict;max-age=3600;path=/`
+				document.cookie = `authToken=${response.data.token};max-age=3600;path=/`
 				this.getAvailableReports(topListId)
 				this.$store.commit("setIsLoggedIn", true)
-			}).catch(error => {
-				console.error(error)
+			}).catch(() => {
 				this.$router.push({
 					name: "Home",
 					query: { d: "", jwt: "" } })
 				this.$store.commit("setIsLoggedIn", false)
-				/*
+
 				this.$buefy.notification.open({
 					duration: 3000,
-					message: error.response ? error.response.data.description : this.$t("somethingWentWrong"),
-					position: "is-bottom-right",
-					type: "is-danger",
+					message: this.$t("somethingWentWrong"),
+					position: "is-bottom",
+					type: "is-warning",
 					hasIcon: true
 				})
-				*/
 			})
 		},
 		async getAvailableReports (id) {
@@ -129,27 +128,35 @@ export default {
 						time: this.reportCountdown()
 					})
 				}
-			}).catch(error => {
+			}).catch(() => {
 				document.cookie = "authToken=;samesite=strict;max-age=0"
+
+				this.$router.push({
+					name: "Home",
+					query: { d: "", jwt: "" } })
+				this.$store.commit("setIsLoggedIn", false)
+
 				this.$buefy.notification.open({
 					duration: 3000,
-					message: error.response.data.description,
-					position: "is-bottom-right",
-					type: "is-danger",
+					message: this.$t("somethingWentWrong"),
+					position: "is-bottom",
+					type: "is-warning",
 					hasIcon: true
 				})
-				console.error(error)
 			})
 		},
+
 		reportCountdownDays () {
 			const now = new Date().getTime()
 			const distance = moment().endOf("month").toDate() - now
 			return Math.floor(distance / (1000 * 60 * 60 * 24))
 		},
+
 		reportCountdown () {
 			const now = new Date().getTime()
 			return moment().endOf("month").toDate() - now
 		},
+
 		async getStats () {
 			await axios({
 				method: "get",
@@ -160,13 +167,17 @@ export default {
 				url: `${API_HOST}/sharedData/job`
 			}).then((response) => {
 				this.$store.commit("setStats", response.data)
-			}).catch(error => {
-				console.error(error)
+			}).catch(() => {
+				this.$router.push({
+					name: "Home",
+					query: { d: "", jwt: "" } })
+				this.$store.commit("setIsLoggedIn", false)
+
 				this.$buefy.notification.open({
 					duration: 3000,
-					message: error.response ? error.response.data.description : this.$t("somethingWentWrong"),
-					position: "is-bottom-right",
-					type: "is-danger",
+					message: this.$t("somethingWentWrong"),
+					position: "is-bottom",
+					type: "is-warning",
 					hasIcon: true
 				})
 			})

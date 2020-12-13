@@ -24,7 +24,7 @@
     "createReport": "Vytvoriť report",
     "requestCreated": "Požiadavka úspešne vytvorená",
     "displayedStatistics": "Zobrazené štatistiky",
-    "somethingWentWrong": "Chyba. Skúste znovu alebo kontaktujte správca webu",
+    "somethingWentWrong": "Niečo sa nepodarilo. Skúste sa prihlásiť znovu.",
     "description": "Popis",
     "value": "Hodnota",
     "invalidToken": "Nevalidní token",

@@ -155,7 +155,7 @@ export default {
 						Authorization: getCookie("authToken")
 					}
 				}).then((response) => {
-					this.$scrollTo("body", { offset: 70 })
+					this.$scrollTo("body", { offset: 0 })
 					this.$store.commit("setStatisticsData", response.data)
 					sessionStorage.setItem("toplistReportDateFrom", response.data.dateFrom)
 				}).catch(error => {

@@ -24,7 +24,7 @@
   "createReport": "Create report",
   "requestCreated": "Request created successfully",
   "displayedStatistics": "Displayed statistics",
-  "somethingWentWrong": "Error. Please try again or contact the webmaster",
+  "somethingWentWrong": "Something went wrong. Please try logging in again.",
   "description": "Description",
   "value": "Value",
   "invalidToken": "Invalid token",
