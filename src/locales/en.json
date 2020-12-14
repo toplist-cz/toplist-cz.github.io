@@ -25,6 +25,7 @@
   "requestCreated": "Request created successfully",
   "displayedStatistics": "Displayed statistics",
   "somethingWentWrong": "Something went wrong. Please try logging in again.",
+  "loggedOut": "We had to check you out. Please try logging in again.",
   "description": "Description",
   "value": "Value",
   "invalidToken": "Invalid token",

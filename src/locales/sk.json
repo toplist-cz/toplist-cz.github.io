@@ -25,6 +25,7 @@
     "requestCreated": "Požiadavka úspešne vytvorená",
     "displayedStatistics": "Zobrazené štatistiky",
     "somethingWentWrong": "Niečo sa nepodarilo. Skúste sa prihlásiť znovu.",
+    "loggedOut": "Museli sme vás odhlásiť. Skúste sa prihlásiť znova.",
     "description": "Popis",
     "value": "Hodnota",
     "invalidToken": "Nevalidní token",

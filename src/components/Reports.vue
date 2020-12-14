@@ -173,7 +173,23 @@ export default {
 					this.$store.commit("setStatisticsData", response.data)
 					sessionStorage.setItem("toplistReportDateFrom", response.data.dateFrom)
 				}).catch(error => {
-					console.error(error)
+					// TODO catchOr
+					if (error.response.status === 401) {
+						document.cookie = "authToken=;samesite=strict;max-age=0"
+						this.$emit("runAppAgain")
+					} else {
+						document.cookie = "authToken=;samesite=strict;max-age=0"
+						this.$router.push({ path: "/" })
+						this.$store.commit("setIsLoggedIn", false)
+
+						this.$buefy.notification.open({
+							duration: 3000,
+							message: this.$t("somethingWentWrong"),
+							position: "is-bottom",
+							type: "is-warning",
+							hasIcon: true
+						})
+					}
 				})
 
 				loadingComponent.close()
@@ -193,7 +209,6 @@ export default {
 			this.$router.push({
 				name: "Home",
 				query: { d: this.availableReports[newIndex].dateFrom, jwt: this.$route.query.jwt } })
-				.catch(() => {})
 		},
 
 		previousReport () {
@@ -207,7 +222,6 @@ export default {
 			this.$router.push({
 				name: "Home",
 				query: { d: this.availableReports[newIndex].dateFrom, jwt: this.$route.query.jwt } })
-				.catch(() => {})
 		}
 	}
 }

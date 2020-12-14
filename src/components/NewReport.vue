@@ -102,11 +102,6 @@ export default {
 					hasIcon: true
 				})
 			}).catch(() => {
-				this.$router.push({
-					name: "Home",
-					query: { d: "", jwt: "" } })
-				this.$store.commit("setIsLoggedIn", false)
-
 				this.$buefy.notification.open({
 					duration: 3000,
 					message: this.$t("somethingWentWrong"),

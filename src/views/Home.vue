@@ -10,7 +10,7 @@
 			/>
 			<Login />
 			<NewReport />
-			<Reports />
+			<Reports @runAppAgain="runApp(true)" />
 			<Footer />
 		</div>
 	</div>
@@ -43,38 +43,41 @@ export default {
 	},
 
 	async created () {
-		const loadingComponent = this.$buefy.loading.open()
-		await this.getStats()
-		const jwt = await getJwtFromUrl()
-		if (jwt) {
-			if (!parseJwt(jwt)) {
-				await this.$router.push({
-					name: "Home",
-					query: { d: "", jwt: "" } })
-				this.$store.commit("setIsLoggedIn", false)
-
-				loadingComponent.close()
-			} else {
-				let toplistId = null
-				for (const id in parseJwt(jwt).sco) {
-					toplistId = id
-				}
-
-				this.$store.commit("setToplistId", toplistId)
-
-				if (!getCookie("authToken")) {
-					await this.getAuth(jwt, toplistId)
-				} else {
-					this.$store.commit("setIsLoggedIn", true)
-					await this.getAvailableReports(toplistId)
-				}
-			}
-		}
-		loadingComponent.close()
+		await this.runApp()
 	},
 
 	methods: {
-		async getAuth (jwt, topListId) {
+		async runApp (repeat = false) {
+			const loadingComponent = this.$buefy.loading.open()
+
+			await this.getStats()
+			const jwt = await getJwtFromUrl()
+			if (jwt) {
+				if (!parseJwt(jwt)) {
+					await this.$router.push({ path: "/" })
+					this.$store.commit("setIsLoggedIn", false)
+
+					loadingComponent.close()
+				} else {
+					let toplistId = null
+					for (const id in parseJwt(jwt).sco) {
+						toplistId = id
+					}
+
+					this.$store.commit("setToplistId", toplistId)
+
+					if (!getCookie("authToken")) {
+						await this.getAuth(jwt, toplistId, repeat)
+					} else {
+						this.$store.commit("setIsLoggedIn", true)
+						await this.getAvailableReports(toplistId, repeat)
+					}
+				}
+			}
+			loadingComponent.close()
+		},
+
+		async getAuth (jwt, topListId, repeat) {
 			await axios({
 				method: "post",
 				crossDomain: true,
@@ -90,22 +93,17 @@ export default {
 				document.cookie = `authToken=${response.data.token};max-age=3600;path=/`
 				this.getAvailableReports(topListId)
 				this.$store.commit("setIsLoggedIn", true)
-			}).catch(() => {
-				this.$router.push({
-					name: "Home",
-					query: { d: "", jwt: "" } })
-				this.$store.commit("setIsLoggedIn", false)
-
-				this.$buefy.notification.open({
-					duration: 3000,
-					message: this.$t("somethingWentWrong"),
-					position: "is-bottom",
-					type: "is-warning",
-					hasIcon: true
-				})
+			}).catch((error) => {
+				// TODO catchOr
+				if (error.response.status === 401 && !repeat) {
+					document.cookie = "authToken=;samesite=strict;max-age=0"
+					this.runApp(true)
+				} else {
+					this.somethingWentWrong(repeat)
+				}
 			})
 		},
-		async getAvailableReports (id) {
+		async getAvailableReports (id, repeat) {
 			await axios({
 				method: "get",
 				url: `${API_HOST}/v1/profi/${id}/reports/month?limit=12`,
@@ -122,21 +120,14 @@ export default {
 						time: this.reportCountdown()
 					})
 				}
-			}).catch(() => {
-				document.cookie = "authToken=;samesite=strict;max-age=0"
-
-				this.$router.push({
-					name: "Home",
-					query: { d: "", jwt: "" } })
-				this.$store.commit("setIsLoggedIn", false)
-
-				this.$buefy.notification.open({
-					duration: 3000,
-					message: this.$t("somethingWentWrong"),
-					position: "is-bottom",
-					type: "is-warning",
-					hasIcon: true
-				})
+			}).catch((error) => {
+				// TODO catchOr
+				if (error.response.status === 401 && !repeat) {
+					document.cookie = "authToken=;samesite=strict;max-age=0"
+					this.runApp(true)
+				} else {
+					this.somethingWentWrong(repeat)
+				}
 			})
 		},
 
@@ -144,6 +135,24 @@ export default {
 			const now = new Date().getTime()
 			const distance = moment().endOf("month").toDate() - now
 			return Math.floor(distance / (1000 * 60 * 60 * 24))
+		},
+
+		somethingWentWrong (logout) {
+			if (logout) {
+				document.cookie = "authToken=;samesite=strict;max-age=0"
+				this.$router.push({ path: "/" })
+				this.$store.commit("setIsLoggedIn", false)
+			} else {
+				this.runApp(true)
+			}
+
+			this.$buefy.notification.open({
+				duration: 3000,
+				message: logout ? this.$t("loggedOut") : this.$t("somethingWentWrong"),
+				position: "is-bottom",
+				type: "is-warning",
+				hasIcon: true
+			})
 		},
 
 		reportCountdown () {
@@ -162,18 +171,7 @@ export default {
 			}).then((response) => {
 				this.$store.commit("setStats", response.data)
 			}).catch(() => {
-				this.$router.push({
-					name: "Home",
-					query: { d: "", jwt: "" } })
-				this.$store.commit("setIsLoggedIn", false)
-
-				this.$buefy.notification.open({
-					duration: 3000,
-					message: this.$t("somethingWentWrong"),
-					position: "is-bottom",
-					type: "is-warning",
-					hasIcon: true
-				})
+				this.somethingWentWrong(false)
 			})
 		}
 	}
