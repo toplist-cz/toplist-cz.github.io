@@ -16,7 +16,13 @@
 				</template>
 			</countdown>
 		</p>
-		<b-button @click="crateReport" icon-left="plus" type="is-info">{{ $t('createReport') }}</b-button>
+		<b-button
+			@click="crateReport"
+			icon-left="plus"
+			type="is-info"
+		>
+			{{ $t('createReport') }}
+		</b-button>
 	</div>
 </template>
 

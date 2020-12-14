@@ -16,23 +16,30 @@ export default new Vuex.Store({
 		dateFrom: "",
 		stats: null
 	},
+
 	getters: {
 		toplistId: (state) => state.toplistId,
+
 		setAvailableReports: (state) => state.availableReports
 	},
+
 	mutations: {
 		setIsLoggedIn: (state, statisticsData) => {
 			state.isLoggedIn = statisticsData
 		},
+
 		setToplistId: (state, toplistId) => {
 			state.toplistId = toplistId
 		},
+
 		setStats: (state, stats) => {
 			state.stats = stats
 		},
+
 		setAvailableReports: (state, reports) => {
 			state.availableReports = reports
 		},
+
 		setStatisticsData: (state, statistics) => {
 			const statisticsData = []
 			statistics.stats.forEach(statistic => {
@@ -51,6 +58,7 @@ export default new Vuex.Store({
 			state.dateFrom = statistics.dateFrom
 			state.statisticsData = statisticsData
 		},
+
 		setStatisticsVisibility: (state, visibleStatistics) => {
 			const statisticsDataCopy = [...state.statisticsData]
 			statisticsDataCopy.forEach((stat, i) => {
@@ -65,6 +73,7 @@ export default new Vuex.Store({
 
 			state.statisticsData = statisticsDataCopy
 		},
+
 		setStatisticHidden: (state, keyword) => {
 			const statisticsDataCopy = [...state.statisticsData]
 			statisticsDataCopy.forEach((stat, i) => {
@@ -74,12 +83,15 @@ export default new Vuex.Store({
 			})
 			state.statisticsData = statisticsDataCopy
 		},
+
 		setSettingsBoxVisible: (state, settingsBoxVisible) => {
 			state.isSettingsBoxVisible = settingsBoxVisible
 		},
+
 		setDisplayNewReport: (state, displayNewReport) => {
 			state.displayNewReport = displayNewReport
 		},
+
 		setNewReportData: (state, newReportData) => {
 			state.newReportData = newReportData
 		}

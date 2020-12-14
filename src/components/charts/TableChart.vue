@@ -1,7 +1,11 @@
 <template>
 	<div>
 		<b-field class="mt-5">
-			<b-input icon="search" v-model="searchQuery.name" :placeholder="$t('description')" />
+			<b-input
+				icon="search"
+				v-model="searchQuery.name"
+				:placeholder="$t('description')"
+			/>
 		</b-field>
 		<b-table
 			aria-next-label="Next page"
@@ -43,7 +47,9 @@
 				</span>
 			</b-table-column>
 		</b-table>
-		<p class="mt-4 has-text-centered-mobile">{{ $t('numberOfResults', [getData.length]) }}</p>
+		<p class="mt-4 has-text-centered-mobile">
+			{{ $t('numberOfResults', [getData.length]) }})
+		</p>
 	</div>
 </template>
 
@@ -91,6 +97,7 @@ export default {
 				}
 				result = datas
 			}
+
 			return result
 		}
 	}

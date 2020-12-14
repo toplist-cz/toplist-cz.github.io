@@ -6,13 +6,26 @@
 				TOPlist Profi
 			</div>
 			<div class="menu">
-				<b-button @click="$store.commit('setSettingsBoxVisible', true)" icon-left="cog" v-if="isLoggedIn" type="is-success">
+				<b-button
+					@click="$store.commit('setSettingsBoxVisible', true)"
+					icon-left="cog" v-if="isLoggedIn" type="is-success"
+				>
 					{{ $t('settings') }}
 				</b-button>
-				<b-button @click="logout" icon-left="sign-out-alt" v-if="isLoggedIn" type="is-warning">
+				<b-button
+					@click="logout"
+					icon-left="sign-out-alt"
+					v-if="isLoggedIn"
+					type="is-warning"
+				>
 					{{ $t('logout') }}
 				</b-button>
-				<b-button tag="a" v-if="!isLoggedIn" href="https://profi.toplist.cz/auth/17a84514-308d-11eb-91f4-d381fc10f328" icon-left="sign-in-alt" type="is-warning">
+				<b-button
+					tag="a"
+					v-if="!isLoggedIn"
+					href="https://profi.toplist.cz/auth/17a84514-308d-11eb-91f4-d381fc10f328"
+					icon-left="sign-in-alt" type="is-warning"
+				>
 					{{ $t('login') }}
 				</b-button>
 			</div>
@@ -45,10 +58,6 @@ export default {
 			this.$router.push({ path: "/" })
 			this.$router.go()
 		}
-	},
-
-	watch: {
-
 	}
 }
 </script>

@@ -3,7 +3,11 @@
 		<NavBar />
 		<SideBar />
 		<div class="container" style="position: relative">
-			<Settings :header="$t('settings')" :message="$t('displayedStatistics')" type="success" />
+			<Settings
+				:header="$t('settings')"
+				:message="$t('displayedStatistics')"
+				type="success"
+			/>
 			<Login />
 			<NewReport />
 			<Reports />
@@ -44,15 +48,6 @@ export default {
 		const jwt = await getJwtFromUrl()
 		if (jwt) {
 			if (!parseJwt(jwt)) {
-				/*
-				this.$buefy.notification.open({
-					duration: 3000,
-					message: this.$t("invalidToken"),
-					position: "is-bottom-right",
-					type: "is-danger",
-					hasIcon: true
-				})
-				*/
 				await this.$router.push({
 					name: "Home",
 					query: { d: "", jwt: "" } })
@@ -80,7 +75,6 @@ export default {
 
 	methods: {
 		async getAuth (jwt, topListId) {
-			// sessionStorage.setItem("toplistJwt", jwt)
 			await axios({
 				method: "post",
 				crossDomain: true,

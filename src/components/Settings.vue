@@ -28,10 +28,11 @@ export default {
 	props: ["visible", "header", "message", "type"],
 
 	computed: {
+		...mapState(["isSettingsBoxVisible", "statisticsData"]),
+
 		alertType () {
 			return `alert alert-${this.type}`
-		},
-		...mapState(["isSettingsBoxVisible", "statisticsData"])
+		}
 	},
 
 	data () {
@@ -42,7 +43,7 @@ export default {
 	},
 
 	watch: {
-		statisticsData (newValue) {
+		statisticsData () {
 			this.statisctics = this.statisticsData
 			this.checkedStatistics = []
 			this.statisticsData.forEach(item => {

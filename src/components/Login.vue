@@ -2,7 +2,13 @@
 	<div class="box box-login" v-if="!isLoggedIn">
 		<h2 class="mb-3">{{ $t('loginTitle') }}</h2>
 		<p class="mb-3">{{ $t('showReportsAfterLogin') }}</p>
-		<b-button tag="a" href="https://profi.toplist.cz/auth/17a84514-308d-11eb-91f4-d381fc10f328" icon-left="sign-in-alt"  v-if="!isLoggedIn" type="is-warning">
+		<b-button
+			tag="a"
+			href="https://profi.toplist.cz/auth/17a84514-308d-11eb-91f4-d381fc10f328"
+			icon-left="sign-in-alt"
+			v-if="!isLoggedIn"
+			type="is-warning"
+		>
 			{{ $t('login') }}
 		</b-button>
 	</div>

@@ -13,10 +13,13 @@
 				{{ statistic.title }}
 			</b-button>
 		</div>
-
 		<h2 class="title title-space-between fixed-title" :style="fixedTitleTop">
-			<b-button size="is-medium" @click="previousReport" icon-left="arrow-left" type="is-warning" />
-			<!--{{ dateFrom | moment('MMMM YYYY') | capitalize }}-->
+			<b-button
+				size="is-medium"
+				@click="previousReport"
+				icon-left="arrow-left"
+				type="is-warning"
+			/>
 			<b-select
 				icon="list"
 				:placeholder="dateFrom | moment('MMMM YYYY') | capitalize"
@@ -33,9 +36,13 @@
 					{{ report.dateFrom | moment('MMMM YYYY') | capitalize }}
 				</option>
 			</b-select>
-			<b-button size="is-medium" @click="nextReport" icon-left="arrow-right" type="is-warning" />
+			<b-button
+				size="is-medium"
+				@click="nextReport"
+				icon-left="arrow-right"
+				type="is-warning"
+			/>
 		</h2>
-
 		<GraphBox
 			v-for="statistic of statistics"
 			:visible="statistic.visible"
@@ -81,6 +88,7 @@ export default {
 
 	computed: {
 		...mapState(["statisticsData", "availableReports", "dateFrom", "toplistId", "isLoggedIn"]),
+
 		fixedReportsTop () {
 			if (this.reportsBoxTop && this.position[1] >= (this.reportsBoxTop + 120)) {
 				return "top: 10px;position: fixed;"
@@ -88,6 +96,7 @@ export default {
 
 			return "top: 80px;"
 		},
+
 		fixedTitleTop () {
 			if (this.reportsTitleTop && this.position[1] >= this.reportsBoxTop + 43) {
 				return "top: 10px;position: fixed;"
@@ -106,8 +115,10 @@ export default {
 		statisticsData (newValue) {
 			this.statistics = newValue
 		},
+
 		availableReports (reports) {
 			let reportToDisplay = reports[0]
+
 			if (sessionStorage.getItem("toplistReportDateFrom")) {
 				const reportFromStorage = reports.find(
 					report => report.dateFrom === sessionStorage.getItem("toplistReportDateFrom")
@@ -120,6 +131,7 @@ export default {
 
 			this.getReport(reportToDisplay)
 		},
+
 		$route: function () {
 			if (this.availableReports.length) {
 				const report = this.availableReports.find(item => item.dateFrom === this.$route.query.d)
@@ -138,6 +150,7 @@ export default {
 
 			return "is-light"
 		},
+
 		async getReport (report) {
 			this.fixedReports = false
 			this.selectedReport = report
@@ -148,6 +161,7 @@ export default {
 					.catch(() => {})
 
 				const loadingComponent = this.$buefy.loading.open()
+
 				await axios({
 					method: "get",
 					url: `${API_HOST}/v1/profi/${this.toplistId}/report/${report.id}`,

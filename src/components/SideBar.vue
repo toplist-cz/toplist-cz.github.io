@@ -1,4 +1,3 @@
-import { mapState } from 'vuex';
 <template>
 	<b-sidebar
 		class="custom-sidebar"

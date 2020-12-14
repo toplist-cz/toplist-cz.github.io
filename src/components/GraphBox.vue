@@ -4,20 +4,39 @@
 		:style="isVisible"
 		v-view="viewHandler"
 	>
-		<b-button class="close-btn" @click="setStatisticVisibility" icon-left="times" type="is-light" />
+		<b-button
+			class="close-btn"
+			@click="setStatisticVisibility"
+			icon-left="times"
+			type="is-light"
+		/>
 		<h2>{{ name }}</h2>
 		<div id="chart-types">
 			<div v-if="type === 'graph'">
 				<div v-if="hasBothCharts" class="switcher mt-5">
-					<button @click="showLine" :class="{'c-button': true, 'active': defaultChartToShow === 'line'}">
+					<button
+						@click="showLine"
+						:class="{'c-button': true, 'active': defaultChartToShow === 'line'}"
+					>
 						<i class="fas fa-chart-line" />
 					</button>
-					<button @click="showPie" :class="{'c-button': true, 'active': defaultChartToShow === 'pie'}">
+					<button
+						@click="showPie"
+						:class="{'c-button': true, 'active': defaultChartToShow === 'pie'}"
+					>
 						<i class="fas fa-chart-pie" />
 					</button>
 				</div>
-				<LineChart :data="getLineChartData" class="mt-5" v-if="defaultChartToShow === 'line'" />
-				<PieChart :data="getPieChartData" class="mt-0 mb-3" v-if="defaultChartToShow === 'pie'" />
+				<LineChart
+					:data="getLineChartData"
+					class="mt-5"
+					v-if="defaultChartToShow === 'line'"
+				/>
+				<PieChart
+					:data="getPieChartData"
+					class="mt-0 mb-3"
+					v-if="defaultChartToShow === 'pie'"
+				/>
 			</div>
 			<div v-else>
 				<TableChart :data="getTableData" />
@@ -69,15 +88,19 @@ export default {
 		getLineChartData () {
 			return this.lineChartParser()
 		},
+
 		getPieChartData () {
 			return this.pieChartParser()
 		},
+
 		getTableData () {
 			return this.tableDataParser()
 		},
+
 		isVisible () {
 			return this.visible ? "" : "display: none"
 		},
+
 		graphBoxClass () {
 			return `box stat${this.statId}`
 		}
@@ -89,6 +112,7 @@ export default {
 				this.$emit("visibleStatistic", this.statId)
 			}
 		},
+
 		setStatisticVisibility () {
 			this.$store.commit("setStatisticHidden", this.keyword)
 		},
@@ -100,6 +124,7 @@ export default {
 		showPie () {
 			this.defaultChartToShow = "pie"
 		},
+
 		lineChartParser () {
 			const chartParams = {
 				data: {
@@ -154,6 +179,7 @@ export default {
 				if (chartParams.data.datasets.length < 2) {
 					dataset.backgroundColor = backgroundColor
 				}
+
 				chartParams.data.datasets.push(dataset)
 			};
 
@@ -187,10 +213,12 @@ export default {
 						otherSum += Math.floor(this.result.data[dataKeyword].reduce(function (a, b) { return a + b }, 0))
 					}
 				};
+
 				if (otherSum > 0) {
 					chartParams.data.labels.push("-")
 					dataset.data.push(otherSum)
 				}
+
 				chartParams.data.datasets.push(dataset)
 
 				this.sumValue = sumValue
