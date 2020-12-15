@@ -65,7 +65,6 @@ import GraphBox from "@/components/GraphBox"
 import scrollPosition from "@/utils/scrollPosition"
 import axios from "axios"
 import { API_HOST } from "@/consts"
-import { getCookie } from "@/utils/authHelpers"
 
 export default {
 	name: "Reports",
@@ -170,19 +169,22 @@ export default {
 					method: "get",
 					url: `${API_HOST}/v1/profi/${this.toplistId}/report/${report.id}`,
 					headers: {
-						Authorization: getCookie("authToken")
+						Authorization: sessionStorage.getItem("authToken")
 					}
 				}).then((response) => {
 					this.$store.commit("setStatisticsData", response.data)
 					this.$scrollTo("body", { offset: 0 })
 					sessionStorage.setItem("toplistReportDateFrom", response.data.dateFrom)
 				}).catch(error => {
-					// TODO catchOr
 					if (error.response.status === 401) {
-						document.cookie = "authToken=;samesite=strict;max-age=0"
+						// TODO authToken
+						sessionStorage.removeItem("authToken")
+						// document.cookie = "authToken=;samesite=strict;max-age=0"
 						this.$emit("runAppAgain")
 					} else {
-						document.cookie = "authToken=;samesite=strict;max-age=0"
+						// TODO authToken
+						sessionStorage.removeItem("authToken")
+						// document.cookie = "authToken=;samesite=strict;max-age=0"
 						this.$router.push({ path: "/" })
 						this.$store.commit("setIsLoggedIn", false)
 

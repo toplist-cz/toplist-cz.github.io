@@ -25,7 +25,7 @@ import Settings from "@/components/Settings.vue"
 import Reports from "@/components/Reports.vue"
 import Footer from "@/components/Footer.vue"
 import axios from "axios"
-import { getCookie, getJwtFromUrl, parseJwt } from "@/utils/authHelpers"
+import { getJwtFromUrl, parseJwt } from "@/utils/authHelpers"
 import { API_HOST } from "@/consts.js"
 import moment from "moment"
 
@@ -66,7 +66,7 @@ export default {
 
 					this.$store.commit("setToplistId", toplistId)
 
-					if (!getCookie("authToken")) {
+					if (!sessionStorage.getItem("authToken")) {
 						await this.getAuth(jwt, toplistId, repeat)
 					} else {
 						this.$store.commit("setIsLoggedIn", true)
@@ -89,14 +89,16 @@ export default {
 					token: jwt
 				})
 			}).then((response) => {
-				// document.cookie = `authToken=${response.data.token};samesite=strict;max-age=3600;path=/`
-				document.cookie = `authToken=${response.data.token};max-age=3600;path=/`
+				// TODO authToken
+				sessionStorage.setItem("authToken", response.data.token)
+				// document.cookie = `authToken=${response.data.token};max-age=3600;path=/`
 				this.getAvailableReports(topListId)
 				this.$store.commit("setIsLoggedIn", true)
 			}).catch((error) => {
-				// TODO catchOr
 				if (error.response.status === 401 && !repeat) {
-					document.cookie = "authToken=;samesite=strict;max-age=0"
+					// TODO authToken
+					sessionStorage.removeItem("authToken")
+					// document.cookie = "authToken=;samesite=strict;max-age=0"
 					this.runApp(true)
 				} else {
 					this.somethingWentWrong(repeat)
@@ -108,7 +110,8 @@ export default {
 				method: "get",
 				url: `${API_HOST}/v1/profi/${id}/reports/month?limit=12`,
 				headers: {
-					Authorization: getCookie("authToken")
+					// Authorization: getCookie("authToken")
+					Authorization: sessionStorage.getItem("authToken")
 				}
 			}).then((response) => {
 				this.$store.commit("setAvailableReports", response.data)
@@ -121,9 +124,10 @@ export default {
 					})
 				}
 			}).catch((error) => {
-				// TODO catchOr
 				if (error.response.status === 401 && !repeat) {
-					document.cookie = "authToken=;samesite=strict;max-age=0"
+					// TODO authToken
+					sessionStorage.removeItem("authToken")
+					// document.cookie = "authToken=;samesite=strict;max-age=0"
 					this.runApp(true)
 				} else {
 					this.somethingWentWrong(repeat)
@@ -139,7 +143,9 @@ export default {
 
 		somethingWentWrong (logout) {
 			if (logout) {
-				document.cookie = "authToken=;samesite=strict;max-age=0"
+				// TODO authToken
+				sessionStorage.removeItem("authToken")
+				// document.cookie = "authToken=;samesite=strict;max-age=0"
 				this.$router.push({ path: "/" })
 				this.$store.commit("setIsLoggedIn", false)
 			} else {

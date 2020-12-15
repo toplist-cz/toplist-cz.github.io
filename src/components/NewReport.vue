@@ -28,7 +28,6 @@
 
 <script>
 import { mapState } from "vuex"
-import { getCookie } from "@/utils/authHelpers"
 import { API_HOST } from "@/consts.js"
 import axios from "axios"
 import moment from "moment"
@@ -90,7 +89,7 @@ export default {
 				method: "get",
 				url: `${API_HOST}/v1/profi/${this.toplistId}/report/month`,
 				headers: {
-					Authorization: getCookie("authToken")
+					Authorization: sessionStorage.getItem("authToken")
 				}
 			}).then(() => {
 				this.$store.commit("setDisplayNewReport", false)
