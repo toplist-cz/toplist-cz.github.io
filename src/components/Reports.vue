@@ -79,8 +79,8 @@ export default {
 	data () {
 		return {
 			statistics: [],
-			reportsBoxTop: null,
-			reportsTitleTop: null,
+			reportsBoxTop: 0,
+			reportsTitleTop: 0,
 			selectedReport: null,
 			activeReportButton: null
 		}
@@ -107,8 +107,12 @@ export default {
 	},
 
 	updated () {
-		this.reportsBoxTop = document.querySelector(".reports-box").offsetTop
-		this.reportsTitleTop = document.querySelector(".fixed-title").offsetTop
+		if (document.querySelector(".reports-box")	&&
+			document.querySelector(".fixed-title")
+		) {
+			this.reportsBoxTop = document.querySelector(".reports-box").offsetTop
+			this.reportsTitleTop = document.querySelector(".fixed-title").offsetTop
+		}
 	},
 
 	watch: {
@@ -169,8 +173,8 @@ export default {
 						Authorization: getCookie("authToken")
 					}
 				}).then((response) => {
-					this.$scrollTo("body", { offset: 0 })
 					this.$store.commit("setStatisticsData", response.data)
+					this.$scrollTo("body", { offset: 0 })
 					sessionStorage.setItem("toplistReportDateFrom", response.data.dateFrom)
 				}).catch(error => {
 					// TODO catchOr
