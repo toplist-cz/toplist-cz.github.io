@@ -7,12 +7,14 @@
 			</div>
 			<div class="menu">
 				<b-button
+					class="is-hidden-mobile"
 					@click="$store.commit('setSettingsBoxVisible', true)"
 					icon-left="cog" v-if="isLoggedIn" type="is-success"
 				>
 					{{ $t('settings') }}
 				</b-button>
 				<b-button
+					class="is-hidden-mobile"
 					@click="logout"
 					icon-left="sign-out-alt"
 					v-if="isLoggedIn"
@@ -28,6 +30,25 @@
 				>
 					{{ $t('login') }}
 				</b-button>
+				<b-dropdown v-if="isLoggedIn" class="is-hidden-tablet">
+					<button class="button is-primary" type="button" slot="trigger">
+						<template>
+							<b-icon icon="list" />
+						</template>
+					</button>
+					<b-dropdown-item @click="$store.commit('setSettingsBoxVisible', true)">
+						<div class="media">
+							<b-icon class="media-left" icon="cog" />
+							<span>{{ $t('settings') }}</span>
+						</div>
+					</b-dropdown-item>
+					<b-dropdown-item @click="logout">
+						<div class="media">
+							<b-icon class="media-left" icon="sign-out-alt" />
+							<span>{{ $t('logout') }}</span>
+						</div>
+					</b-dropdown-item>
+				</b-dropdown>
 			</div>
 		</nav>
 	</div>
@@ -54,7 +75,8 @@ export default {
 
 	methods: {
 		logout () {
-			document.cookie = "authToken=;samesite=strict;max-age=0"
+			sessionStorage.removeItem("authToken")
+			// document.cookie = "authToken=;samesite=strict;max-age=0"
 			this.$router.push({ path: "/" })
 			this.$router.go()
 		}

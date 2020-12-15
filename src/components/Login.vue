@@ -24,19 +24,3 @@ export default {
 	}
 }
 </script>
-
-<style lang="scss" scoped>
-.box-login {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	padding-bottom: 40px;
-
-	p {
-		color: #428bca;
-		font-weight: 300;
-		font-size: 20px;
-	}
-}
-</style>
