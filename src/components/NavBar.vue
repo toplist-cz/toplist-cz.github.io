@@ -31,7 +31,7 @@
 					{{ $t('login') }}
 				</b-button>
 				<b-dropdown v-if="isLoggedIn" class="is-hidden-tablet">
-					<button class="button is-primary" type="button" slot="trigger">
+					<button class="button is-success" type="button" slot="trigger">
 						<template>
 							<b-icon icon="list" />
 						</template>
