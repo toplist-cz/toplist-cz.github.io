@@ -76,8 +76,7 @@ $large: 1440px;
 .button-green {
   background-color: #87b87f;
 
-  &:hover,
-  &:focus {
+  &:hover, &:focus {
     background-color: #8ed084;
   }
 }
@@ -85,8 +84,7 @@ $large: 1440px;
 .button-yellow {
   background-color: #ffc107;
 
-  &:hover,
-  &:focus {
+  &:hover, &:focus {
     background-color: #fdce41;
   }
 }
@@ -246,8 +244,6 @@ $large: 1440px;
   }
 
   .is-light {
-    //background-color: #428bca !important;
-
     &:hover, &:focus{
       background-color: #eeeeee !important;
       border-color: transparent !important;
