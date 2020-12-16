@@ -365,10 +365,6 @@ $large: 1440px;
   @extend .box-shadow-none;
 }
 
-.b-checkbox.checkbox input[type=checkbox] {
-
-}
-
 .b-checkbox.checkbox:hover input[type=checkbox]:not(:disabled) + .check {
   border-color: #428bca !important;
 }
