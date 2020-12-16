@@ -25,7 +25,7 @@
 				<b-button
 					tag="a"
 					v-if="!isLoggedIn"
-					href="https://profi.toplist.cz/auth/17a84514-308d-11eb-91f4-d381fc10f328"
+					:href="getLoginUrl"
 					icon-left="sign-in-alt" type="is-warning"
 				>
 					{{ $t('login') }}
@@ -57,6 +57,7 @@
 <script>
 import { mapState } from "vuex"
 import scrollPosition from "@/utils/scrollPosition"
+import { LOGIN_URL } from "@/consts"
 
 export default {
 	name: "NavBar",
@@ -70,7 +71,11 @@ export default {
 	},
 
 	computed: {
-		...mapState(["availableReports", "toplistId", "isLoggedIn"])
+		...mapState(["availableReports", "toplistId", "isLoggedIn"]),
+
+		getLoginUrl () {
+			return LOGIN_URL
+		}
 	},
 
 	methods: {

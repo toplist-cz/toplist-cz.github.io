@@ -4,7 +4,7 @@
 		<p class="mb-3">{{ $t('showReportsAfterLogin') }}</p>
 		<b-button
 			tag="a"
-			href="https://profi.toplist.cz/auth/17a84514-308d-11eb-91f4-d381fc10f328"
+			:href="getLoginUrl"
 			icon-left="sign-in-alt"
 			v-if="!isLoggedIn"
 			type="is-warning"
@@ -16,11 +16,17 @@
 
 <script>
 import { mapState } from "vuex"
+import { LOGIN_URL } from "@/consts.js"
+
 export default {
 	name: "Login",
 
 	computed: {
-		...mapState(["isLoggedIn"])
+		...mapState(["isLoggedIn"]),
+
+		getLoginUrl () {
+			return LOGIN_URL
+		}
 	}
 }
 </script>
