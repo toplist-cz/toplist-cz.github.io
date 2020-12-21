@@ -1,10 +1,37 @@
 <script>
-import { Line } from "vue-chartjs"
+import { generateChart } from "vue-chartjs"
+import Chart from "chart.js"
+
+const CustomLine = generateChart("custom-line", "LineWithLine")
+
+Chart.defaults.LineWithLine = Chart.defaults.line
+Chart.controllers.LineWithLine = Chart.controllers.line.extend({
+	draw: function (ease) {
+		Chart.controllers.line.prototype.draw.call(this, ease)
+
+		if (this.chart.tooltip._active && this.chart.tooltip._active.length) {
+			const activePoint = this.chart.tooltip._active[0]
+			const ctx = this.chart.ctx
+			const x = activePoint.tooltipPosition().x
+			const topY = this.chart.scales["y-axis-0"].top
+			const bottomY = this.chart.scales["y-axis-0"].bottom
+
+			ctx.save()
+			ctx.beginPath()
+			ctx.moveTo(x, topY)
+			ctx.lineTo(x, bottomY)
+			ctx.lineWidth = 2
+			ctx.strokeStyle = "#428bca"
+			ctx.stroke()
+			ctx.restore()
+		}
+	}
+})
 
 export default {
 	name: "LineChart",
 
-	extends: Line,
+	extends: CustomLine,
 
 	props: {
 		data: Object
@@ -28,7 +55,7 @@ export default {
 							beginAtZero: true
 						},
 						gridLines: {
-							drawOnChartArea: false
+							// drawOnChartArea: false
 						}
 					}]
 				},
@@ -40,7 +67,9 @@ export default {
 				},
 				responsiveAnimationDuration: 0,
 				tooltips: {
-					mode: "index"
+					mode: "index",
+					intersect: false,
+					axis: "x"
 				}
 			}
 		}
