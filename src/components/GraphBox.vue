@@ -18,13 +18,19 @@
 						@click="showLine"
 						:class="{'c-button': true, 'active': defaultChartToShow === 'line'}"
 					>
-						<i class="fas fa-chart-line" />
+						<b-icon
+							icon="chart-line"
+							size="is-small"
+						/>
 					</button>
 					<button
 						@click="showPie"
 						:class="{'c-button': true, 'active': defaultChartToShow === 'pie'}"
 					>
-						<i class="fas fa-chart-pie" />
+						<b-icon
+							icon="chart-pie"
+							size="is-small"
+						/>
 					</button>
 				</div>
 				<LineChart

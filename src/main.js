@@ -15,6 +15,67 @@ import VueCountdown from "@chenfengyuan/vue-countdown"
 import Raven from "raven-js"
 import RavenVue from "raven-js/plugins/vue"
 
+import { library } from "@fortawesome/fontawesome-svg-core"
+import {
+	faPlus,
+	faAngleLeft,
+	faAngleRight,
+	faCog,
+	faSignOutAlt,
+	faChartPie,
+	faChartLine,
+	faArrowRight,
+	faArrowLeft,
+	faTimes,
+	faCheckCircle,
+	faExclamationTriangle,
+	faExclamationCircle,
+	faArrowUp,
+	faArrowDown,
+	faSignInAlt,
+	faList,
+	faSearch
+} from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
+
+library.add(
+	faList,
+	faPlus,
+	faAngleLeft,
+	faAngleRight,
+	faCog,
+	faSignOutAlt,
+	faChartPie,
+	faChartLine,
+	faArrowRight,
+	faArrowLeft,
+	faTimes,
+	faCheckCircle,
+	faExclamationTriangle,
+	faExclamationCircle,
+	faArrowUp,
+	faArrowDown,
+	faSignInAlt,
+	faSearch
+)
+
+Vue.component("vue-fontawesome", FontAwesomeIcon)
+Vue.use(Buefy, {
+	defaultIconComponent: "vue-fontawesome",
+	defaultIconPack: "fas",
+	customIconPacks: {
+		fas: {
+			sizes: {
+				default: "lg",
+				"is-small": "1x",
+				"is-medium": "2x",
+				"is-large": "3x"
+			},
+			iconPrefix: ""
+		}
+	}
+})
+
 Raven
 	.config("https://f765a3567db64267bfac4402aac6f961@sentry.toplist.cz/14")
 	.addPlugin(RavenVue, Vue)
@@ -36,7 +97,6 @@ Vue.use(VueMoment, {
 Vue.use(checkView)
 Vue.use(vueScrollTo)
 Vue.component(VueCountdown.name, VueCountdown)
-Vue.use(Buefy, { defaultIconPack: "fas" })
 
 Vue.filter("capitalize", function (value) {
 	if (!value) return ""

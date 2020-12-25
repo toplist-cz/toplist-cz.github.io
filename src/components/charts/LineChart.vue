@@ -43,6 +43,11 @@ export default {
 				legend: {
 					display: !((this.data.datasets.length < 2))
 				},
+				plugins: {
+					datalabels: {
+						display: false
+					}
+				},
 				maintainAspectRatio: false,
 				scales: {
 					xAxes: [{
