@@ -176,15 +176,11 @@ export default {
 					this.$scrollTo("body", { offset: 0 })
 					sessionStorage.setItem("toplistReportDateFrom", response.data.dateFrom)
 				}).catch(error => {
-					if (error.response.status === 401) {
-						// TODO authToken
+					if (error.response.status && error.response.status === 401) {
 						sessionStorage.removeItem("authToken")
-						// document.cookie = "authToken=;samesite=strict;max-age=0"
 						this.$emit("runAppAgain")
 					} else {
-						// TODO authToken
 						sessionStorage.removeItem("authToken")
-						// document.cookie = "authToken=;samesite=strict;max-age=0"
 						this.$router.push({ path: "/" })
 						this.$store.commit("setIsLoggedIn", false)
 

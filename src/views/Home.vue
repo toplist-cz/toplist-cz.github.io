@@ -89,16 +89,12 @@ export default {
 					token: jwt
 				})
 			}).then((response) => {
-				// TODO authToken
 				sessionStorage.setItem("authToken", response.data.token)
-				// document.cookie = `authToken=${response.data.token};max-age=3600;path=/`
 				this.getAvailableReports(topListId)
 				this.$store.commit("setIsLoggedIn", true)
 			}).catch((error) => {
 				if (error.response.status === 401 && !repeat) {
-					// TODO authToken
 					sessionStorage.removeItem("authToken")
-					// document.cookie = "authToken=;samesite=strict;max-age=0"
 					this.runApp(true)
 				} else {
 					this.somethingWentWrong(repeat)
@@ -125,9 +121,7 @@ export default {
 				}
 			}).catch((error) => {
 				if (error.response.status === 401 && !repeat) {
-					// TODO authToken
 					sessionStorage.removeItem("authToken")
-					// document.cookie = "authToken=;samesite=strict;max-age=0"
 					this.runApp(true)
 				} else {
 					this.somethingWentWrong(repeat)
@@ -143,9 +137,7 @@ export default {
 
 		somethingWentWrong (logout) {
 			if (logout) {
-				// TODO authToken
 				sessionStorage.removeItem("authToken")
-				// document.cookie = "authToken=;samesite=strict;max-age=0"
 				this.$router.push({ path: "/" })
 				this.$store.commit("setIsLoggedIn", false)
 			} else {

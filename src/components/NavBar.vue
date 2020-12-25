@@ -81,7 +81,6 @@ export default {
 	methods: {
 		logout () {
 			sessionStorage.removeItem("authToken")
-			// document.cookie = "authToken=;samesite=strict;max-age=0"
 			this.$router.push({ path: "/" })
 			this.$router.go()
 		}
