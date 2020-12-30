@@ -101,12 +101,12 @@ export default {
 				}
 			})
 		},
+
 		async getAvailableReports (id, repeat) {
 			await axios({
 				method: "get",
 				url: `${API_HOST}/v1/profi/${id}/reports/month?limit=12`,
 				headers: {
-					// Authorization: getCookie("authToken")
 					Authorization: sessionStorage.getItem("authToken")
 				}
 			}).then((response) => {
