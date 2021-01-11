@@ -1,6 +1,0 @@
-[submodule "report/assets/bootstrap4"]
-	path = report/assets/bootstrap4
-	url = https://github.com/twbs/bootstrap.git
-[submodule "assets/toplist-common"]
-	path = assets/toplist-common
-	url = https://gitlab.toplist.cz/toplist/common.git
