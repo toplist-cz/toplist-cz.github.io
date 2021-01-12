@@ -42,13 +42,12 @@ export default new Vuex.Store({
 		setStatisticsData: (state, statistics) => {
 			const statisticsData = []
 			statistics.stats.forEach(statistic => {
-				const hasBothCharts = [4, 6, 7, 25]
 				const pieChartIsDefault = [4, 6, 7]
 				statisticsData.push({
 					...statistic,
 					renderer: state.stats[statistic.statId].renderer,
 					keyword: state.stats[statistic.statId].keyword,
-					bothCharts: hasBothCharts.includes(statistic.statId),
+					bothCharts: (statistic.result && statistic.result.dataSeries && statistic.result.dataSeries.length > 1),
 					defaultChart: pieChartIsDefault.includes(statistic.statId) ? "pie" : "line",
 					visible: true
 				})
