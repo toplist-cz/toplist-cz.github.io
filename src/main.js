@@ -76,10 +76,12 @@ Vue.use(Buefy, {
 	}
 })
 
-Raven
-	.config("https://f765a3567db64267bfac4402aac6f961@sentry.toplist.cz/14")
-	.addPlugin(RavenVue, Vue)
-	.install()
+if (process.env.NODE_ENV !== "development") {
+	Raven
+		.config("https://f765a3567db64267bfac4402aac6f961@sentry.toplist.cz/14")
+		.addPlugin(RavenVue, Vue)
+		.install()
+}
 
 async function importLocales () {
 	let locale = process.env.VUE_APP_I18N_LOCALE
