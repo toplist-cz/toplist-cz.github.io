@@ -26,7 +26,7 @@ import Reports from "@/components/Reports.vue"
 import Footer from "@/components/Footer.vue"
 import axios from "axios"
 import { getJwtFromUrl, parseJwt } from "@/utils/authHelpers"
-import { API_HOST } from "@/consts.js"
+import { API_HOST, APP_ID } from "@/consts.js"
 import moment from "moment"
 
 export default {
@@ -84,7 +84,7 @@ export default {
 				headers: {
 					"Content-Type": "application/json; charset=utf-8"
 				},
-				url: `${API_HOST}/auth`,
+				url: `${API_HOST}/auth/${APP_ID}`,
 				data: JSON.stringify({
 					token: jwt
 				})
@@ -114,13 +114,13 @@ export default {
 				if (response.data.length === 0 || response.data[0].dateFrom !== moment().subtract(1, "months").startOf("month").format("YYYY-MM-DD")) {
 					this.$store.commit("setDisplayNewReport", true)
 					this.$store.commit("setNewReportData", {
-						id: response.data[0].id,
+						id: (response.data.length > 0) ? response.data[0].id : 0,
 						days: this.reportCountdownDays(),
 						time: this.reportCountdown()
 					})
 				}
 			}).catch((error) => {
-				if (error.response.status === 401 && !repeat) {
+				if (error.response && error.response.status === 401 && !repeat) {
 					sessionStorage.removeItem("authToken")
 					this.runApp(true)
 				} else {
@@ -135,13 +135,13 @@ export default {
 			return Math.floor(distance / (1000 * 60 * 60 * 24))
 		},
 
-		somethingWentWrong (logout) {
+		somethingWentWrong (logout) { // nekdy to je logout a nekdy repeat?
 			if (logout) {
 				sessionStorage.removeItem("authToken")
 				this.$router.push({ path: "/" })
 				this.$store.commit("setIsLoggedIn", false)
 			} else {
-				this.runApp(true)
+				// this.runApp(true) // pri chybe neopakovat porad dokola
 			}
 
 			this.$buefy.notification.open({

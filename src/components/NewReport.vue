@@ -17,7 +17,7 @@
 			</countdown>
 		</p>
 		<b-button
-			@click="crateReport"
+			@click="createReport"
 			icon-left="plus"
 			type="is-info"
 		>
@@ -84,7 +84,7 @@ export default {
 			}
 		},
 
-		async crateReport () {
+		async createReport () {
 			await axios({
 				method: "get",
 				url: `${API_HOST}/v1/profi/${this.toplistId}/report/month`,

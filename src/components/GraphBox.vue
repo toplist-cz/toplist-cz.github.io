@@ -139,8 +139,12 @@ export default {
 				}
 			}
 
-			for (let i = 0; i < this.result.timeline.length; i++) {
-				chartParams.data.labels.push(moment(this.result.timeline[i]).format("D."))
+			if (this.result.x) {
+				chartParams.data.labels = this.result.x
+			} else {
+				for (let i = 0; i < this.result.timeline.length; i++) {
+					chartParams.data.labels.push(moment(this.result.timeline[i]).format("D.M."))
+				}
 			};
 
 			let maxValue = 0
