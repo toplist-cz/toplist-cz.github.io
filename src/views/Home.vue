@@ -65,6 +65,7 @@ export default {
 					}
 
 					this.$store.commit("setToplistId", toplistId)
+					this.$store.commit("setJWT", jwt)
 
 					if (!sessionStorage.getItem("authToken")) {
 						await this.getAuth(jwt, toplistId, repeat)

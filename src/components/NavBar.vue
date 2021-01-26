@@ -57,7 +57,7 @@
 <script>
 import { mapState } from "vuex"
 import scrollPosition from "@/utils/scrollPosition"
-import { LOGIN_URL } from "@/consts"
+import { PROFI_URL, APP_ID } from "@/consts"
 
 export default {
 	name: "NavBar",
@@ -74,7 +74,7 @@ export default {
 		...mapState(["availableReports", "toplistId", "isLoggedIn"]),
 
 		getLoginUrl () {
-			return LOGIN_URL
+			return `${PROFI_URL}/auth/${APP_ID}`
 		}
 	},
 

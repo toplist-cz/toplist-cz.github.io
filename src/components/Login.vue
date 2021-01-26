@@ -16,7 +16,7 @@
 
 <script>
 import { mapState } from "vuex"
-import { LOGIN_URL } from "@/consts.js"
+import { PROFI_URL, APP_ID } from "@/consts.js"
 
 export default {
 	name: "Login",
@@ -25,7 +25,7 @@ export default {
 		...mapState(["isLoggedIn"]),
 
 		getLoginUrl () {
-			return LOGIN_URL
+			return `${PROFI_URL}/auth/${APP_ID}`
 		}
 	}
 }

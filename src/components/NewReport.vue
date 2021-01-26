@@ -17,7 +17,8 @@
 			</countdown>
 		</p>
 		<b-button
-			@click="createReport"
+			tag="a"
+			:href="getCreateUrl"
 			icon-left="plus"
 			type="is-info"
 		>
@@ -28,7 +29,7 @@
 
 <script>
 import { mapState } from "vuex"
-import { API_HOST } from "@/consts.js"
+import { API_HOST, PROFI_URL, APP_ID } from "@/consts.js"
 import axios from "axios"
 import moment from "moment"
 
@@ -36,11 +37,16 @@ export default {
 	name: "NewReport",
 
 	computed: {
-		...mapState(["displayNewReport", "newReportData", "toplistId", "isLoggedIn"]),
+		...mapState(["displayNewReport", "newReportData", "toplistId", "isLoggedIn", "jwt"]),
 
 		nameOfLastMonth () {
 			return moment().subtract(1, "month").startOf("month").format("MMMM")
+		},
+
+		getCreateUrl () {
+			return `${PROFI_URL}/report/month/${APP_ID}/${this.toplistId}?jwt=${this.jwt}`
 		}
+
 	},
 
 	methods: {

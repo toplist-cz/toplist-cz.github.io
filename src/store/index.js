@@ -13,7 +13,8 @@ export default new Vuex.Store({
 		displayNewReport: false,
 		newReportData: null,
 		dateFrom: "",
-		stats: null
+		stats: null,
+		jwt: ""
 	},
 
 	getters: {
@@ -29,6 +30,10 @@ export default new Vuex.Store({
 
 		setToplistId: (state, toplistId) => {
 			state.toplistId = toplistId
+		},
+
+		setJWT: (state, jwt) => {
+			state.jwt = jwt
 		},
 
 		setStats: (state, stats) => {
