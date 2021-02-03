@@ -32,5 +32,6 @@
   "logout": "Odhlásit se",
   "hours": "hodin",
   "minutes": "minut",
-  "seconds": "vteřin"
+  "seconds": "vteřin",
+  "reportWOP": "report se vytváří"
 }

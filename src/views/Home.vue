@@ -10,6 +10,7 @@
 			/>
 			<Login />
 			<NewReport />
+			<ReportWOP />
 			<Reports @runAppAgain="runApp(true)" />
 			<Footer />
 		</div>
@@ -24,6 +25,7 @@ import NewReport from "@/components/NewReport.vue"
 import Settings from "@/components/Settings.vue"
 import Reports from "@/components/Reports.vue"
 import Footer from "@/components/Footer.vue"
+import ReportWOP from "@/components/ReportWOP.vue"
 import axios from "axios"
 import { getJwtFromUrl, parseJwt } from "@/utils/authHelpers"
 import { API_HOST, APP_ID } from "@/consts.js"
@@ -39,7 +41,8 @@ export default {
 		Settings,
 		Reports,
 		Footer,
-		SideBar
+		SideBar,
+		ReportWOP
 	},
 
 	async created () {
@@ -111,7 +114,7 @@ export default {
 					Authorization: sessionStorage.getItem("authToken")
 				}
 			}).then((response) => {
-				this.$store.commit("setAvailableReports", response.data)
+				this.$store.commit("setAvailableReports", response.data.filter(i => i.status === "done"))
 				if (response.data.length === 0 || response.data[0].dateFrom !== moment().subtract(1, "months").startOf("month").format("YYYY-MM-DD")) {
 					this.$store.commit("setDisplayNewReport", true)
 					this.$store.commit("setNewReportData", {
@@ -119,6 +122,9 @@ export default {
 						days: this.reportCountdownDays(),
 						time: this.reportCountdown()
 					})
+				}
+				if (response.data.length > 0 && response.data[0].status !== 'done') {
+					this.$store.commit("setReportWOP", true)
 				}
 			}).catch((error) => {
 				if (error.response && error.response.status === 401 && !repeat) {

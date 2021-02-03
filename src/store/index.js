@@ -14,7 +14,8 @@ export default new Vuex.Store({
 		newReportData: null,
 		dateFrom: "",
 		stats: null,
-		jwt: ""
+		jwt: "",
+		isReportWOP: false
 	},
 
 	getters: {
@@ -91,12 +92,21 @@ export default new Vuex.Store({
 			state.isSettingsBoxVisible = settingsBoxVisible
 		},
 
+		toggleSettingsBoxVisible: (state) => {
+			state.isSettingsBoxVisible = !state.isSettingsBoxVisible
+		},
+
 		setDisplayNewReport: (state, displayNewReport) => {
 			state.displayNewReport = displayNewReport
 		},
 
 		setNewReportData: (state, newReportData) => {
 			state.newReportData = newReportData
+		},
+
+		setReportWOP: (state, reportWOP) => {
+			state.isReportWOP = reportWOP
 		}
+
 	}
 })

@@ -8,7 +8,7 @@
 			<div class="menu">
 				<b-button
 					class="is-hidden-mobile"
-					@click="$store.commit('setSettingsBoxVisible', true)"
+					@click="$store.commit('toggleSettingsBoxVisible')"
 					icon-left="cog" v-if="isLoggedIn" type="is-success"
 				>
 					{{ $t('settings') }}

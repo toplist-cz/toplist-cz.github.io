@@ -124,7 +124,7 @@ export default {
 
 			if (sessionStorage.getItem("toplistReportDateFrom")) {
 				const reportFromStorage = reports.find(
-					report => report.dateFrom === sessionStorage.getItem("toplistReportDateFrom")
+					report => report.dateFrom === sessionStorage.getItem("toplistReportDateFrom") && report.status === "done"
 				)
 
 				if (reportFromStorage) {
