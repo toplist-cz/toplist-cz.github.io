@@ -18,11 +18,10 @@ export default new Vuex.Store({
 		isReportWOP: false
 	},
 
-	getters: {
-		toplistId: (state) => state.toplistId,
-
-		setAvailableReports: (state) => state.availableReports
-	},
+	// getters: {
+	//	toplistId: (state) => state.toplistId
+	// 	setAvailableReports: (state) => state.availableReports
+	// },
 
 	mutations: {
 		setIsLoggedIn: (state, statisticsData) => {

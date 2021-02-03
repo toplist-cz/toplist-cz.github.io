@@ -1,12 +1,17 @@
 <template>
-	<div class="box box-login box-new-report" v-if="isReportWOP">
-		<h2 class="mb-3">{{ $t('reportWOP') | capitalize }}</h2>
-		<p class="mb-4"><strong>{{ $t('reportWOP') }}</strong></p>
+	<div class="box box-login box-new-report" v-if="isReportWOP && isLoggedIn">
+		<h2 class="mb-3">{{ $t('newReport') }}</h2>
+		<p class="mb-5 has-text-centered">
+			{{ $t('newReport1') }} <strong>{{ nameOfLastMonth }}</strong> {{ $t('newReport2') }}
+			<br>
+			{{ $t('reportWOP') | capitalize }}<br>
+		</p>
 	</div>
 </template>
 
 <script>
 import { mapState } from "vuex"
+import moment from "moment"
 
 export default {
 	name: "ReportWOP",
@@ -14,7 +19,11 @@ export default {
 	props: ["visible", "header", "message", "type"],
 
 	computed: {
-		...mapState(["isReportWOP"]),
+		...mapState(["isReportWOP", "isLoggedIn"]),
+
+		nameOfLastMonth () {
+			return moment().subtract(1, "month").startOf("month").format("MMMM")
+		},
 
 		alertType () {
 			return `alert alert-${this.type}`

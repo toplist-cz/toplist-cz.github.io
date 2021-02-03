@@ -28,7 +28,7 @@ import Footer from "@/components/Footer.vue"
 import ReportWOP from "@/components/ReportWOP.vue"
 import axios from "axios"
 import { getJwtFromUrl, parseJwt } from "@/utils/authHelpers"
-import { API_HOST, APP_ID } from "@/consts.js"
+import { PROFI_URL, API_HOST, APP_ID } from "@/consts.js"
 import moment from "moment"
 
 export default {
@@ -69,6 +69,7 @@ export default {
 
 					this.$store.commit("setToplistId", toplistId)
 					this.$store.commit("setJWT", jwt)
+					setTimeout(this.renewJWT, 60000)
 
 					if (!sessionStorage.getItem("authToken")) {
 						await this.getAuth(jwt, toplistId, repeat)
@@ -79,6 +80,24 @@ export default {
 				}
 			}
 			loadingComponent.close()
+		},
+
+		async renewJWT () {
+			// console.log(this.jwt)
+			await axios({
+				method: "put",
+				crossDomain: true,
+				headers: {
+					"Content-Type": "application/json; charset=utf-8"
+				},
+				url: `${PROFI_URL}/auth/${APP_ID}`,
+				data: JSON.stringify({
+					token: this.$store.state.jwt
+				})
+			}).then((response) => {
+				this.$store.commit("setJWT", response.data.token)
+				setTimeout(this.renewJWT, 60000)
+			})
 		},
 
 		async getAuth (jwt, topListId, repeat) {
@@ -123,7 +142,7 @@ export default {
 						time: this.reportCountdown()
 					})
 				}
-				if (response.data.length > 0 && response.data[0].status !== 'done') {
+				if (response.data.length > 0 && response.data[0].status !== "done") {
 					this.$store.commit("setReportWOP", true)
 				}
 			}).catch((error) => {
