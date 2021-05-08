@@ -1,5 +1,6 @@
 module.exports = {
-	publicPath: '',
+	publicPath: "/report",
+	productionSourceMap: true,
 	pluginOptions: {
 		i18n: {
 			locale: "cs",
