@@ -1,0 +1,18 @@
+build:
+  image: node:latest
+  stage: build
+  script:
+    - npm install -g @vue/cli
+    - mkdir -p ./dist
+    - npm run build
+  artifacts:
+    paths:
+      - dist
+
+deploy-dev:
+  image: alpine:latest
+  stage: deploy
+  script:
+    - apk add rsync openssh-client
+    - chmod 600 .ssh/id_ecdsa
+    - rsync -av --delete-after -e "ssh -o \"UserKnownHostsFile=/dev/null\" -o \"StrictHostKeyChecking=no\" -i .ssh/id_ecdsa" dist/ gitlab@10.183.148.183:www/report

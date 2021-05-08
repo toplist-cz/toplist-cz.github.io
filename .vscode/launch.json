@@ -24,6 +24,13 @@
                 "VUE_APP_API_HOST": "http://10.0.30.217:8000/api",
                 "VUE_APP_PROFI_URL": "http://10.2.60.107:9401"
             }
-        }
+        },
+        {
+            "type": "node-terminal",
+            "name": "Run Script: build",
+            "request": "launch",
+            "command": "npm run build",
+            "cwd": "${workspaceFolder}"
+        },
     ]
 }
