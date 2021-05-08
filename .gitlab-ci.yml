@@ -2,11 +2,10 @@ build:
   image: node:latest
   stage: build
   script:
-    - npm install @vue/cli-service -g
-    - npm audit
-    - mkdir -p ./dist
+    - npm install --progress=false
     - npm run build
   artifacts:
+    expire_in: 1 week
     paths:
       - dist
 
