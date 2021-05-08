@@ -3,6 +3,7 @@ build:
   stage: build
   script:
     - npm install -g @vue/cli
+    - npm audit
     - npm audit fix
     - mkdir -p ./dist
     - npm run build
