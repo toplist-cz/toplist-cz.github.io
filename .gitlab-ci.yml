@@ -2,7 +2,7 @@ build:
   image: node:latest
   stage: build
   script:
-    - npm install -g @vue/cli
+    - npm install @vue/cli-service -g
     - npm audit
     - mkdir -p ./dist
     - npm run build
