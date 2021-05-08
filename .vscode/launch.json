@@ -1,0 +1,29 @@
+{
+    "configurations": [
+        {
+            "type": "firefox",
+            "name": "http://localhost:8080",
+            "request": "launch",
+            "url": "http://localhost:8080",
+            "webRoot": "${workspaceFolder}"
+        },
+        {
+            "type": "node-terminal",
+            "name": "Run Script: serve",
+            "request": "launch",
+            "command": "npm run serve",
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "node-terminal",
+            "name": "Run Script: serve (dev)",
+            "request": "launch",
+            "command": "npm run serve",
+            "cwd": "${workspaceFolder}",
+            "env": {
+                "VUE_APP_API_HOST": "http://10.0.30.217:8000/api",
+                "VUE_APP_PROFI_URL": "http://10.2.60.107:9401"
+            }
+        }
+    ]
+}
