@@ -1,5 +1,5 @@
 build:
-  image: node:latest
+  image: node:15
   stage: build
   script:
     - npm install --progress=false
@@ -13,6 +13,6 @@ deploy-dev:
   image: alpine:latest
   stage: deploy
   script:
-    - apk add rsync openssh-client
+    - apk add --no-cache rsync openssh-client
     - chmod 600 .ssh/id_ecdsa
     - rsync -av --delete-after -e "ssh -o \"UserKnownHostsFile=/dev/null\" -o \"StrictHostKeyChecking=no\" -i .ssh/id_ecdsa" dist/ gitlab@10.183.148.183:www/report
