@@ -31,3 +31,9 @@ npm run lint
 
 ### After build
 In /dist folder will be generated all the files. Just put them onto internet.
+
+```plantuml
+Bob -> Alice : hello
+Alice -> Bob : hi
+```
+
