@@ -1,6 +1,5 @@
 module.exports = {
-	publicPath: "/report",
-	productionSourceMap: true,
+	publicPath: '',
 	pluginOptions: {
 		i18n: {
 			locale: "cs",
@@ -9,4 +8,4 @@ module.exports = {
 			enableInSFC: true
 		}
 	}
-};
+}
