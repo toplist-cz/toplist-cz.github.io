@@ -48,7 +48,7 @@
 			</b-table-column>
 		</b-table>
 		<p class="mt-4 has-text-centered-mobile">
-			{{ $t('numberOfResults', [getData.length]) }})
+			{{ $t('numberOfResults', [getData.length]) }}
 		</p>
 	</div>
 </template>

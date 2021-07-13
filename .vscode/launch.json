@@ -1,4 +1,10 @@
 {
+    "compounds": [
+        {
+            "name": "dev Node+Browser",
+            "configurations": [ "Run Script: serve (dev)", "http://localhost:8080" ]
+        }
+    ],
     "configurations": [
         {
             "type": "firefox",

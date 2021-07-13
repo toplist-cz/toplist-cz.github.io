@@ -144,6 +144,7 @@ export default {
 				}
 				if (response.data.length > 0 && response.data[0].status !== "done") {
 					this.$store.commit("setReportWOP", true)
+					// this.$store.commit("setDisplayNewReport", false) - zatim ukazovat oboje
 				}
 			}).catch((error) => {
 				if (error.response && error.response.status === 401 && !repeat) {

@@ -162,7 +162,7 @@ export default {
 					let color = "#229bdb"
 					if (maxValue === this.result.data[dataKeyword][dataId]) {
 						color = "#4caf50"
-					} else if (moment(this.result.timeline[dataId]).day() === 0 || moment(this.result.timeline[dataId]).day() === 6) {
+					} else if (this.result.timeline && (moment(this.result.timeline[dataId]).day() === 0 || moment(this.result.timeline[dataId]).day() === 6)) {
 						color = "#006bab"
 					}
 					data.push(this.result.data[dataKeyword][dataId])
