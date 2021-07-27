@@ -1,6 +1,7 @@
 <script>
 import { generateChart } from "vue-chartjs"
 import Chart from "chart.js"
+import chartTrendline from "chartjs-plugin-trendline"
 
 const CustomLine = generateChart("custom-line", "LineWithLine")
 
@@ -35,6 +36,9 @@ export default {
 
 	props: {
 		data: Object
+	},
+	components: {
+		chartTrendline
 	},
 
 	computed: {

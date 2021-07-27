@@ -2,13 +2,13 @@
     "compounds": [
         {
             "name": "dev Node+Browser",
-            "configurations": [ "Run Script: serve (dev)", "http://localhost:8080" ]
+            "configurations": [ "Run Script: serve (dev)", "Firefox http://localhost:8080" ]
         }
     ],
     "configurations": [
         {
             "type": "firefox",
-            "name": "http://localhost:8080",
+            "name": "Firefox http://localhost:8080",
             "request": "launch",
             "url": "http://localhost:8080",
             "webRoot": "${workspaceFolder}"

@@ -169,7 +169,7 @@ export default {
 						color = "#006bab"
 					}
 					data.push(this.result.data[dataKeyword][dataId])
-					if (chartParams.data.datasets.length < 2) {
+					if (this.result.dataSeries.length < 2) {
 						backgroundColor.push(color)
 					};
 				}
@@ -189,8 +189,14 @@ export default {
 					pointRadius: 4,
 					pointHoverRadius: 6
 				}
-				if (chartParams.data.datasets.length < 2) {
+				if (this.result.dataSeries.length < 2) {
 					dataset.backgroundColor = backgroundColor
+				} else {
+					dataset.trendlineLinear = {
+						style: Colors[colorIndex],
+						lineStyle: "dotted",
+						width: 1
+					}
 				}
 
 				chartParams.data.datasets.push(dataset)
