@@ -52,6 +52,7 @@ export default new Vuex.Store({
 					...statistic,
 					renderer: state.stats[statistic.statId].renderer,
 					keyword: state.stats[statistic.statId].keyword,
+					titleShort: state.stats[statistic.statId].short,
 					bothCharts: (statistic.result && statistic.result.dataSeries && statistic.result.dataSeries.length > 1),
 					defaultChart: pieChartIsDefault.includes(statistic.statId) ? "pie" : "line",
 					visible: true

@@ -2,7 +2,7 @@ html,
 body {
   font-family: -apple-system, BlinkMacSystemFont, Open Sans, Helvetica,Arial,sans-serif;
   margin: 0;
-  background-color: #eeeeee !important;
+  background-color: #ffffff !important;
   line-height: 1.2;
 }
 
@@ -105,7 +105,6 @@ $color-warning-hover: lighten($color-warning, 10%);
 .box {
   padding: 20px 10px;
   border-radius: 0.1rem;
-  box-shadow: 3px 3px 1px gainsboro;
   background-color: #ffffff;
   margin-bottom: 20px;
   position: relative;

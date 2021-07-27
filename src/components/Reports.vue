@@ -10,7 +10,7 @@
 				expanded
 				class="mb-1"
 			>
-				{{ statistic.title }}
+				{{ statistic.titleShort }}
 			</b-button>
 		</div>
 		<h2 class="title title-space-between fixed-title" :style="fixedTitleTop">
