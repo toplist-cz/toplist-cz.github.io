@@ -46,15 +46,18 @@ export default new Vuex.Store({
 
 		setStatisticsData: (state, statistics) => {
 			const statisticsData = []
+			const pieChartIsDefault = [4, 6, 7, 23]
+			const bothCharts = [4, 6, 7, 23, 25]
+			const showTrend = [1, 5, 17, 27]
 			statistics.stats.forEach(statistic => {
-				const pieChartIsDefault = [4, 6, 7]
 				statisticsData.push({
 					...statistic,
 					renderer: state.stats[statistic.statId].renderer,
 					keyword: state.stats[statistic.statId].keyword,
 					titleShort: state.stats[statistic.statId].short,
-					bothCharts: (statistic.result && statistic.result.dataSeries && statistic.result.dataSeries.length > 1),
+					bothCharts: bothCharts.includes(statistic.statId),
 					defaultChart: pieChartIsDefault.includes(statistic.statId) ? "pie" : "line",
+					showTrend: showTrend.includes(statistic.statId),
 					visible: true
 				})
 			})

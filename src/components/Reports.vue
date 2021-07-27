@@ -54,6 +54,7 @@
 			:has-both-charts="statistic.bothCharts"
 			:result="statistic.result"
 			:default-chart="statistic.defaultChart"
+			:showTrend="statistic.showTrend"
 			@visibleStatistic="changeVisibleStatistic"
 		/>
 	</div>

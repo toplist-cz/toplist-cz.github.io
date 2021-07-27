@@ -76,6 +76,7 @@ export default {
 		result: Object || Array,
 		hasBothCharts: Boolean,
 		defaultChart: String,
+		showTrend: Boolean,
 		statId: Number,
 		visible: Boolean,
 		keyword: String
@@ -191,7 +192,8 @@ export default {
 				}
 				if (this.result.dataSeries.length < 2) {
 					dataset.backgroundColor = backgroundColor
-				} else {
+				}
+				if (this.showTrend) {
 					dataset.trendlineLinear = {
 						style: Colors[colorIndex],
 						lineStyle: "dotted",
