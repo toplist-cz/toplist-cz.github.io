@@ -11,7 +11,10 @@
 			type="is-light"
 		/>
 		<h2>{{ name }}</h2>
-		<div id="chart-types">
+		<div v-if="result.message">
+			<h3 class="is-warning">{{ result.message }}</h3>
+		</div>
+		<div v-else>
 			<div v-if="type === 'graph'">
 				<div v-if="hasBothCharts" class="switcher mt-5">
 					<button
@@ -199,7 +202,7 @@ export default {
 		},
 
 		pieChartParser () {
-			if (this.type === "graph") {
+			if (this.type === "graph" && this.result.dataSeries) { // hack because this is ran even when data.message is defined !?
 				const chartParams = {
 					data: {
 						labels: [],
