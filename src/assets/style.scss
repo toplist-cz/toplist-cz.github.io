@@ -103,7 +103,7 @@ $color-warning-hover: lighten($color-warning, 10%);
 }
 
 .box {
-  padding: 20px 10px;
+  padding: 10px 10px;
   border-radius: 0.1rem;
   background-color: #ffffff;
   margin-bottom: 20px;
@@ -112,7 +112,7 @@ $color-warning-hover: lighten($color-warning, 10%);
   h2 {
     color: $color-blue;
     text-align: center;
-    margin: 8px 8px 0px 8px;
+    margin: 0px 4px 0px 4px;
     font-weight: 300;
     font-size: 26px;
     @include mobile{
@@ -207,7 +207,7 @@ $color-warning-hover: lighten($color-warning, 10%);
 
 .close-btn{
   position: absolute;
-  top: 10px;
+  top: 5px;
   right: 10px;
 }
 
