@@ -3,6 +3,7 @@ build:
   stage: build
   variables:
     PUBLIC_PATH: "/report"
+    VUE_APP_ID: "ec4b0c0e-f60b-11eb-bb74-50465d7427c0"
   script:
     - npm install --progress=false
     - npm run build
