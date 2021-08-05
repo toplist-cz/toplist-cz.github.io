@@ -1,6 +1,8 @@
 build:
   image: node:15
   stage: build
+  variables:
+    PUBLIC_PATH: "/report"
   script:
     - npm install --progress=false
     - npm run build
