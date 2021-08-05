@@ -29,8 +29,7 @@
 
 <script>
 import { mapState } from "vuex"
-import { API_HOST, PROFI_URL, APP_ID } from "@/consts.js"
-import axios from "axios"
+import { PROFI_URL, APP_ID } from "@/consts.js"
 import moment from "moment"
 
 export default {
@@ -88,34 +87,8 @@ export default {
 			} else {
 				return this.$t("newReportSecondsUp4")
 			}
-		},
-
-		async createReport () {
-			await axios({
-				method: "get",
-				url: `${API_HOST}/v1/profi/${this.toplistId}/report/month`,
-				headers: {
-					Authorization: sessionStorage.getItem("authToken")
-				}
-			}).then(() => {
-				this.$store.commit("setDisplayNewReport", false)
-				this.$buefy.notification.open({
-					duration: 3000,
-					message: this.$t("requestCreated"),
-					position: "is-bottom",
-					type: "is-success",
-					hasIcon: true
-				})
-			}).catch(() => {
-				this.$buefy.notification.open({
-					duration: 3000,
-					message: this.$t("somethingWentWrong"),
-					position: "is-bottom",
-					type: "is-warning",
-					hasIcon: true
-				})
-			})
 		}
+
 	}
 }
 </script>

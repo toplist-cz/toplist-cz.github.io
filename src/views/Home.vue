@@ -28,7 +28,7 @@ import Footer from "@/components/Footer.vue"
 import ReportWOP from "@/components/ReportWOP.vue"
 import axios from "axios"
 import { getJwtFromUrl, parseJwt } from "@/utils/authHelpers"
-import { PROFI_URL, API_HOST, APP_ID } from "@/consts.js"
+import { API_HOST, APP_ID } from "@/consts.js"
 import moment from "moment"
 
 export default {
@@ -90,7 +90,7 @@ export default {
 				headers: {
 					"Content-Type": "application/json; charset=utf-8"
 				},
-				url: `${PROFI_URL}/auth/${APP_ID}`,
+				url: `${API_HOST}/auth/${APP_ID}`,
 				data: JSON.stringify({
 					token: this.$store.state.jwt
 				})
@@ -102,7 +102,7 @@ export default {
 
 		async getAuth (jwt, topListId, repeat) {
 			await axios({
-				method: "post",
+				method: "put",
 				crossDomain: true,
 				headers: {
 					"Content-Type": "application/json; charset=utf-8"
