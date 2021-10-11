@@ -28,7 +28,7 @@ import Footer from "@/components/Footer.vue"
 import ReportWOP from "@/components/ReportWOP.vue"
 import axios from "axios"
 import { getJwtFromUrl, parseJwt } from "@/utils/authHelpers"
-import { API_HOST, APP_ID } from "@/consts.js"
+import { API_HOST, APP_ID, PROFI_URL } from "@/consts.js"
 import moment from "moment"
 
 export default {
@@ -69,7 +69,7 @@ export default {
 
 					this.$store.commit("setToplistId", toplistId)
 					this.$store.commit("setJWT", jwt)
-					setTimeout(this.renewJWT, 60000)
+					setTimeout(this.renewJWT, 6000)
 
 					if (!sessionStorage.getItem("authToken")) {
 						await this.getAuth(jwt, toplistId, repeat)
@@ -90,28 +90,35 @@ export default {
 				headers: {
 					"Content-Type": "application/json; charset=utf-8"
 				},
-				url: `${API_HOST}/auth/${APP_ID}`,
+				url: `${PROFI_URL}/auth/${APP_ID}`,
 				data: JSON.stringify({
 					token: this.$store.state.jwt
 				})
 			}).then((response) => {
 				this.$store.commit("setJWT", response.data.token)
-				setTimeout(this.renewJWT, 60000)
+				setTimeout(this.renewJWT, 6000)
+			}).catch(() => {
+				this.somethingWentWrong(true)
 			})
 		},
 
 		async getAuth (jwt, topListId, repeat) {
-			await axios({
+			const requestData = {
 				method: "put",
 				crossDomain: true,
 				headers: {
 					"Content-Type": "application/json; charset=utf-8"
 				},
-				url: `${API_HOST}/auth/${APP_ID}`,
-				data: JSON.stringify({
+				url: `${API_HOST}/auth/${APP_ID}`
+			}
+			if (sessionStorage.getItem("authToken")) {
+				requestData.headers.Authorization = sessionStorage.getItem("authToken")
+			} else {
+				requestData.data = JSON.stringify({
 					token: jwt
 				})
-			}).then((response) => {
+			}
+			await axios(requestData).then((response) => {
 				sessionStorage.setItem("authToken", response.data.token)
 				this.getAvailableReports(topListId)
 				this.$store.commit("setIsLoggedIn", true)

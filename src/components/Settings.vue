@@ -69,8 +69,6 @@ export default {
 <style lang="scss" scoped>
 .alert {
 	padding: 20px 10px;
-	border-radius: 0.5rem;
-	box-shadow: 5px 5px 3px gainsboro;
 	margin-bottom: 20px;
 	color: #212529;
 	text-align: center;

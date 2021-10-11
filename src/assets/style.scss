@@ -1,6 +1,6 @@
 html,
 body {
-  font-family: -apple-system, BlinkMacSystemFont, Open Sans, Helvetica,Arial,sans-serif;
+  font-family: Helvetica,Arial,sans-serif;
   margin: 0;
   background-color: #ffffff !important;
   line-height: 1.2;
@@ -50,10 +50,13 @@ $color-warning-hover: lighten($color-warning, 10%);
   -o-transition: all 250ms;
 }
 
+.button {
+  border-radius: 0px;
+}
+
 .c-button {
   outline: none;
   border: none;
-  border-radius: 2px;
   padding: 10px 10px 10px 35px;
   margin: 0px 5px;
   font-size: 16px;
@@ -104,8 +107,12 @@ $color-warning-hover: lighten($color-warning, 10%);
 
 .box {
   padding: 10px 10px;
-  border-radius: 0.1rem;
-  background-color: #ffffff;
+  border-color: #CCC;
+  border-width: 1px;
+  border-style: solid;
+  background-color: #fbfbfb;
+  box-shadow: none;
+  border-radius: 0px;
   margin-bottom: 20px;
   position: relative;
 
