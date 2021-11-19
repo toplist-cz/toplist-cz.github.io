@@ -385,3 +385,8 @@ $color-warning-hover: lighten($color-warning, 10%);
 .b-checkbox.checkbox:hover input[type=checkbox]:not(:disabled) + .check {
   border-color: $color-blue !important;
 }
+
+.table.is-hoverable {
+  tr:nth-child(even) {background: #CCC}
+  tr:nth-child(odd) {background: #CCC}
+}
