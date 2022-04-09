@@ -21,7 +21,7 @@
     "chartjs-plugin-trendline": "^0.2.2",
     "core-js": "^3.6.5",
     "dotenv": "^8.2.0",
-    "moment": "^2.29.1",
+    "moment": "^2.29.2",
     "raven-js": "^3.27.2",
     "vue": "^2.6.12",
     "vue-chartjs": "^3.5.1",
